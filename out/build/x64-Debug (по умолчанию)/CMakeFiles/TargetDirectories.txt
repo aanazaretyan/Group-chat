@@ -1,0 +1,8 @@
+D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/CMakeFiles/edit_cache.dir
+D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/CMakeFiles/rebuild_cache.dir
+D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/Client/CMakeFiles/Client.dir
+D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/Client/CMakeFiles/edit_cache.dir
+D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/Client/CMakeFiles/rebuild_cache.dir
+D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/Server/CMakeFiles/Server.dir
+D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/Server/CMakeFiles/edit_cache.dir
+D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/Server/CMakeFiles/rebuild_cache.dir
