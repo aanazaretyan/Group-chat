@@ -1,11 +1,1 @@
 # ninja log v5
-1	514	643998209	Client/CMakeFiles/CMakeTarget.dir/Client.cpp.obj	335eb3e962741dfa
-515	917	643998209	Client/CMakeTarget.exe	d45b3281dd341956
-1	479	643998661	Client/CMakeFiles/Client.dir/Client.cpp.obj	2bebb7d61cdc199c
-480	929	643998661	Client/Client.exe	ea0d3122e47947d0
-1	566	643998668	Server/CMakeFiles/Server.dir/Server.cpp.obj	b9c8d37538ec3a2
-568	921	643998668	Server/Server.exe	29b660e0e95d9c6
-0	571	643998709	Client/CMakeFiles/Client.dir/Client.cpp.obj	2bebb7d61cdc199c
-572	763	643998709	Client/Client.exe	ea0d3122e47947d0
-1	517	643998716	Server/CMakeFiles/Server.dir/Server.cpp.obj	b9c8d37538ec3a2
-518	715	643998716	Server/Server.exe	29b660e0e95d9c6

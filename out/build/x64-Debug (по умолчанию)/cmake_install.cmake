@@ -1,8 +1,8 @@
-# Install script for directory: D:/Education/1st course works/Programming/Group chat
+# Install script for directory: C:/Users/asis/source/repos/alfaxa4/Group-chat
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "D:/Education/1st course works/Programming/Group chat/out/install/x64-Debug (по умолчанию)")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/asis/Source/Repos/alfaxa4/Group-chat/out/install/x64-Debug (по умолчанию)")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/Client/cmake_install.cmake")
-  include("D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/Server/cmake_install.cmake")
+  include("C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/Client/cmake_install.cmake")
+  include("C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/Server/cmake_install.cmake")
 
 endif()
 
@@ -47,5 +47,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Education/1st course works/Programming/Group chat/out/build/x64-Debug (по умолчанию)/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
