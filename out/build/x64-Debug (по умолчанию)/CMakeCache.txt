@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//Compile nana as a shared library.
+BUILD_SHARED_LIBS:BOOL=OFF
+
 //Path to a program.
 CMAKE_AR:FILEPATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.29.30037/bin/Hostx64/x64/lib.exe
 
@@ -87,7 +90,7 @@ CMAKE_INSTALL_PREFIX:PATH=C:/Users/asis/Source/Repos/alfaxa4/Group-chat/out/inst
 CMAKE_LINKER:FILEPATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.29.30037/bin/Hostx64/x64/link.exe
 
 //make program
-CMAKE_MAKE_PROGRAM:FILEPATH=C:/PROGRA~2/MICROS~1/2019/PROFES~1/Common7/IDE/COMMON~1/MICROS~1/CMake/Ninja/ninja.exe
+CMAKE_MAKE_PROGRAM:FILEPATH=C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe
 
 //Flags used by the linker during the creation of modules during
 // all build types.
@@ -120,6 +123,21 @@ CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
 CMAKE_PROJECT_NAME:STATIC=Group chat
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION:STATIC=1.7.3
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_MAJOR:STATIC=1
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_MINOR:STATIC=7
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_PATCH:STATIC=3
+
+//Value Computed by CMake
+CMAKE_PROJECT_VERSION_TWEAK:STATIC=
 
 //RC compiler
 CMAKE_RC_COMPILER:FILEPATH=C:/Program Files (x86)/Windows Kits/10/bin/10.0.19041.0/x64/rc.exe
@@ -197,6 +215,69 @@ Group chat_BINARY_DIR:STATIC=C:/Users/asis/source/repos/alfaxa4/Group-chat/out/b
 
 //Value Computed by CMake
 Group chat_SOURCE_DIR:STATIC=C:/Users/asis/source/repos/alfaxa4/Group-chat
+
+//Defining HAVE_BOOLEAN before including jpeglib.h
+JPEG_HAVE_BOOLEAN:BOOL=OFF
+
+//Set to ON to build nana with the /MP option (Visual Studio 2005
+// and above).
+MSVC_USE_MP:BOOL=ON
+
+//Set to ON to build nana with the /MT(d) option.
+MSVC_USE_STATIC_RUNTIME:BOOL=ON
+
+//Activate automatic GUI testing?
+NANA_CMAKE_AUTOMATIC_GUI_TESTING:BOOL=OFF
+
+//Force use of Boost filesystem if available (over STD)?
+NANA_CMAKE_BOOST_FILESYSTEM_FORCE:BOOL=OFF
+
+//Enable class audio::play for PCM playback.
+NANA_CMAKE_ENABLE_AUDIO:BOOL=OFF
+
+//enable config.hpp
+NANA_CMAKE_ENABLE_CONF:BOOL=OFF
+
+//Enable the use of JPEG
+NANA_CMAKE_ENABLE_JPEG:BOOL=OFF
+
+//replaced boost.thread with meganz's mingw-std-threads.
+NANA_CMAKE_ENABLE_MINGW_STD_THREADS_WITH_MEGANZ:BOOL=OFF
+
+//Enable the use of PNG
+NANA_CMAKE_ENABLE_PNG:BOOL=OFF
+
+//Install nana after compiling the library (to be consumed WITHOUT
+// cmake!!)
+NANA_CMAKE_INSTALL:BOOL=OFF
+
+//Use libjpeg from operating system.
+NANA_CMAKE_LIBJPEG_FROM_OS:BOOL=ON
+
+//Use libpng from operating system.
+NANA_CMAKE_LIBPNG_FROM_OS:BOOL=ON
+
+//Force nana filesystem over ISO and boost?
+NANA_CMAKE_NANA_FILESYSTEM_FORCE:BOOL=OFF
+
+//Use of STD filesystem?(a compilation error will ocurre if not
+// available)
+NANA_CMAKE_STD_FILESYSTEM_FORCE:BOOL=OFF
+
+//Stop compilation after showing the annoying debug messages.
+NANA_CMAKE_STOP_VERBOSE_PREPROCESSOR:BOOL=OFF
+
+//Show annoying debug messages during compilation.
+NANA_CMAKE_VERBOSE_PREPROCESSOR:BOOL=OFF
+
+//Link nana statically to C++ standard library
+NANA_STATIC_STDLIB:BOOL=ON
+
+//Value Computed by CMake
+nana_BINARY_DIR:STATIC=C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/nana
+
+//Value Computed by CMake
+nana_SOURCE_DIR:STATIC=C:/Users/asis/source/repos/alfaxa4/Group-chat/nana
 
 
 ########################
@@ -335,4 +416,20 @@ CMAKE_STATIC_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Test CXXBuiltIn_FS_BuiltIn
+CXXBuiltIn_FS_BuiltIn:INTERNAL=
+//Test CXXBuiltIn_FS_cppfs
+CXXBuiltIn_FS_cppfs:INTERNAL=
+//Test CXXBuiltIn_FS_stdcppfs
+CXXBuiltIn_FS_stdcppfs:INTERNAL=
+//Test CXX_std__cpp17_FS_BuiltIn
+CXX_std__cpp17_FS_BuiltIn:INTERNAL=
+//Test CXX_std__cpp17_FS_cppfs
+CXX_std__cpp17_FS_cppfs:INTERNAL=
+//Test CXX_std__cpp17_FS_stdcppfs
+CXX_std__cpp17_FS_stdcppfs:INTERNAL=
+//Test CXX_std_cpp17_FS_BuiltIn
+CXX_std_cpp17_FS_BuiltIn:INTERNAL=1
+//Have include filesystem
+NANA_HAVE_FILESYSTEM:INTERNAL=1
 

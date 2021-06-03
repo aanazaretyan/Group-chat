@@ -130,6 +130,61 @@
 		},
 		{
 			"path" : "Server/CMakeLists.txt"
+		},
+		{
+			"path" : "nana/CMakeLists.txt"
+		},
+		{
+			"path" : "nana/build/cmake/install_nana.cmake"
+		},
+		{
+			"path" : "nana/build/cmake/OS.cmake"
+		},
+		{
+			"path" : "nana/build/cmake/shared_libs.cmake"
+		},
+		{
+			"path" : "nana/build/cmake/compilers.cmake"
+		},
+		{
+			"path" : "nana/build/cmake/enable_png.cmake"
+		},
+		{
+			"path" : "nana/build/cmake/enable_jpeg.cmake"
+		},
+		{
+			"path" : "nana/build/cmake/enable_audio.cmake"
+		},
+		{
+			"path" : "nana/build/cmake/select_filesystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/CheckIncludeFile.cxx.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.20/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"path" : "nana/build/cmake/verbose.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",

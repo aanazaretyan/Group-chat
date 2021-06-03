@@ -6,3 +6,6 @@ C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умол
 C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/Server/CMakeFiles/Server.dir
 C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/Server/CMakeFiles/edit_cache.dir
 C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/Server/CMakeFiles/rebuild_cache.dir
+C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/nana/CMakeFiles/nana.dir
+C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/nana/CMakeFiles/edit_cache.dir
+C:/Users/asis/source/repos/alfaxa4/Group-chat/out/build/x64-Debug (по умолчанию)/nana/CMakeFiles/rebuild_cache.dir

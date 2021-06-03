@@ -9,7 +9,8 @@
 					"childIndexes" : 
 					[
 						1,
-						2
+						2,
+						3
 					],
 					"minimumCMakeVersion" : 
 					{
@@ -45,12 +46,30 @@
 					[
 						1
 					]
+				},
+				{
+					"build" : "nana",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "nana",
+					"targetIndexes" : 
+					[
+						2
+					]
 				}
 			],
 			"name" : "Debug",
 			"projects" : 
 			[
 				{
+					"childIndexes" : 
+					[
+						1
+					],
 					"directoryIndexes" : 
 					[
 						0,
@@ -62,6 +81,18 @@
 					[
 						0,
 						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "nana",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
 					]
 				}
 			],
@@ -80,6 +111,13 @@
 					"jsonFile" : "target-Server-Debug-776e33bba4fa9ae5de77.json",
 					"name" : "Server",
 					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "nana::@ed88db020af0ca629ee9",
+					"jsonFile" : "target-nana-Debug-913e3d13d1585208a5ac.json",
+					"name" : "nana",
+					"projectIndex" : 1
 				}
 			]
 		}
