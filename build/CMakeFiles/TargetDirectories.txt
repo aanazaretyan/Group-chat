@@ -1,0 +1,10 @@
+D:/Education/1st course works/Programming/Group-chat/build/CMakeFiles/RUN_TESTS.dir
+D:/Education/1st course works/Programming/Group-chat/build/CMakeFiles/ALL_BUILD.dir
+D:/Education/1st course works/Programming/Group-chat/build/CMakeFiles/ZERO_CHECK.dir
+D:/Education/1st course works/Programming/Group-chat/build/external/doctest/CMakeFiles/doctest.dir
+D:/Education/1st course works/Programming/Group-chat/build/external/doctest/CMakeFiles/RUN_TESTS.dir
+D:/Education/1st course works/Programming/Group-chat/build/external/doctest/CMakeFiles/ALL_BUILD.dir
+D:/Education/1st course works/Programming/Group-chat/build/Client/CMakeFiles/Client.dir
+D:/Education/1st course works/Programming/Group-chat/build/Client/CMakeFiles/RUN_TESTS.dir
+D:/Education/1st course works/Programming/Group-chat/build/Server/CMakeFiles/Server.dir
+D:/Education/1st course works/Programming/Group-chat/build/Server/CMakeFiles/RUN_TESTS.dir

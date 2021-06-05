@@ -1,0 +1,17 @@
+[
+{
+  "directory": "D:/Education/1st course works/Programming/Group-chat/out/build/x64-Debug (по умолчанию)",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.293\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /Foexternal\\doctest\\CMakeFiles\\doctest.dir\\doctest.cpp.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\Education\\1st course works\\Programming\\Group-chat\\external\\doctest\\doctest.cpp\"",
+  "file": "D:/Education/1st course works/Programming/Group-chat/external/doctest/doctest.cpp"
+},
+{
+  "directory": "D:/Education/1st course works/Programming/Group-chat/out/build/x64-Debug (по умолчанию)",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.293\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoClient\\CMakeFiles\\Client.dir\\Client.cpp.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\Education\\1st course works\\Programming\\Group-chat\\Client\\Client.cpp\"",
+  "file": "D:/Education/1st course works/Programming/Group-chat/Client/Client.cpp"
+},
+{
+  "directory": "D:/Education/1st course works/Programming/Group-chat/out/build/x64-Debug (по умолчанию)",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.293\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17 /FoServer\\CMakeFiles\\Server.dir\\Server.cpp.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\Education\\1st course works\\Programming\\Group-chat\\Server\\Server.cpp\"",
+  "file": "D:/Education/1st course works/Programming/Group-chat/Server/Server.cpp"
+}
+]

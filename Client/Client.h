@@ -4,5 +4,7 @@
 #pragma once
 
 #include <iostream>
-
+//#include "boost/asio.hpp"
+//#include "boost/asio/buffer.hpp"
+//#include "boost/asio/co_spawn.hpp"
 // TODO: установите здесь ссылки на дополнительные заголовки, требующиеся для программы.

@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/asis/source/repos/alfaxa4/Group-chat/Client
+# Install script for directory: D:/Education/1st course works/Programming/Group-chat/Client
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/asis/Source/Repos/alfaxa4/Group-chat/out/install/x64-Debug (по умолчанию)")
+  set(CMAKE_INSTALL_PREFIX "D:/Education/1st course works/Programming/Group-chat/out/install/x64-Debug (по умолчанию)")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
