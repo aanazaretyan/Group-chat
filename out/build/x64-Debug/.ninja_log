@@ -1,0 +1,20 @@
+# ninja log v5
+210	37700	6448857676730634	build.ninja	721a8ec47aa90d3d
+116	89022	6448832207856353	external/doctest/CMakeFiles/doctest.dir/doctest.cpp.obj	2bbf3abee2821d1e
+89022	90753	6448832220424142	lib/doctest.lib	61b6972a1e547872
+7	7577	6448854269148561	Server/CMakeFiles/server_test.dir/lib.cpp.obj	c5fbe804e487e77b
+2	7831	6448854269218877	Server/CMakeFiles/server_test.dir/test.cpp.obj	470dac2573e1b57a
+7833	39708	6448854564356149	bin/server_test.exe	bd9fbe71aea1e86d
+7833	39708	6448854564356149	Server/server_test_tests-b858cb2.cmake	bd9fbe71aea1e86d
+39710	45553	6448854655331198	Server/CMakeFiles/server.dir/lib.cpp.obj	66ece161cbc86f58
+5	12117	6448855177214788	Server/CMakeFiles/server.dir/server.cpp.obj	7aeb7c8c8dbaf099
+12134	13934	6448855195139441	bin/server.exe	8a2cc84ed891fc16
+18	341	6448857749441690	Client/CMakeFiles/client.dir/client.cpp.obj	306bd96223924fa6
+13	633	6448857752637450	Client/CMakeFiles/client_test.dir/test.cpp.obj	82494ecb0d958e7e
+343	726	6448857753191147	Client/CMakeFiles/client_test.dir/lib.cpp.obj	5926d773fde77d7c
+635	937	6448857755493034	Client/CMakeFiles/client.dir/lib.cpp.obj	9d39c8f5f47ee99b
+938	2402	6448857764416603	bin/client.exe	7ceee78b7f254b1d
+727	2536	6448857771643168	bin/client_test.exe	884effd8f68e4bce
+727	2536	6448857771643168	Client/client_test_tests-b858cb2.cmake	884effd8f68e4bce
+17	7476	6448858842225105	Client/CMakeFiles/client.dir/client.cpp.obj	306bd96223924fa6
+7479	8099	6448858847866950	bin/client.exe	7ceee78b7f254b1d

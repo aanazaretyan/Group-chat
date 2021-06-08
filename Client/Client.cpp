@@ -1,11 +1,6 @@
-﻿#include "Client.h"
+#include <iostream>
 
-
-
-int main()
-{
-	std::cout << "Hello, I'm Client" << std::endl;
-	//std::string a = text();
-	//std::cout << a;
-	return 0;
+int main() { 
+	std::cout << "Hello, world!";
+    return 0;
 }

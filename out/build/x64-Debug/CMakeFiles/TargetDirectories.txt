@@ -1,0 +1,17 @@
+C:/Programming/Group-chat/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Programming/Group-chat/out/build/x64-Debug/CMakeFiles/test.dir
+C:/Programming/Group-chat/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Programming/Group-chat/out/build/x64-Debug/external/doctest/CMakeFiles/rebuild_cache.dir
+C:/Programming/Group-chat/out/build/x64-Debug/external/doctest/CMakeFiles/test.dir
+C:/Programming/Group-chat/out/build/x64-Debug/external/doctest/CMakeFiles/doctest.dir
+C:/Programming/Group-chat/out/build/x64-Debug/external/doctest/CMakeFiles/edit_cache.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Server/CMakeFiles/server_test.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Server/CMakeFiles/server.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Server/CMakeFiles/rebuild_cache.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Server/CMakeFiles/test.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Server/CMakeFiles/edit_cache.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Client/CMakeFiles/client_test.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Client/CMakeFiles/client.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Client/CMakeFiles/rebuild_cache.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Client/CMakeFiles/test.dir
+C:/Programming/Group-chat/out/build/x64-Debug/Client/CMakeFiles/edit_cache.dir

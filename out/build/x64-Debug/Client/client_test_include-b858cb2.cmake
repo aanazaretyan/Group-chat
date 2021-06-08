@@ -1,0 +1,5 @@
+if(EXISTS "C:/Programming/Group-chat/out/build/x64-Debug/Client/client_test_tests-b858cb2.cmake")
+  include("C:/Programming/Group-chat/out/build/x64-Debug/Client/client_test_tests-b858cb2.cmake")
+else()
+  add_test(client_test_NOT_BUILT-b858cb2 client_test_NOT_BUILT-b858cb2)
+endif()
