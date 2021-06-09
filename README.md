@@ -1,10 +1,6 @@
 This is Group chat for local network which use RSA for encoding messages.
 
 To launch the app you should download and install some utilities
-
-  chocolatey:
-  
-    Istallation guide -> 
   
   conan:
     
