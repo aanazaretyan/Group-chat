@@ -12,5 +12,5 @@ To launch the app you should download and install some utilities
       
   boost:
     choco install boost-msvc-14.2 (administrative shell)
-    or
+      or
     pip install boost-msvc-14.2 (administrative shell)
