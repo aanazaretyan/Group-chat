@@ -8,7 +8,7 @@ To launch the app you should download and install some utilities
   
   conan:
     
-    Installing using chocolatey (How to install chocolatey -> https://chocolatey.org/install ):
+    Installing using chocolatey (How to install chocolatey -> "https://chocolatey.org/install" ):
       choco install conan (administrative shell)
       
     Installing using pip (How to install pip -> https://pip.pypa.io/en/stable/installing ):
