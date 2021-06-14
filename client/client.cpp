@@ -11,6 +11,7 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <string_view>
+#include <thread>
 
 
 using boost::asio::ip::tcp;
@@ -82,6 +83,7 @@ private:
     boost::asio::strand<boost::asio::io_context::executor_type> strand;
 };
 
+
 int main(int argc, char* argv[]) {
     try {
         boost::asio::io_context io_context;
@@ -105,9 +107,11 @@ int main(int argc, char* argv[]) {
                     std::cout << c;
                 }
             }
-            std::make_shared<session>(io_context, std::move(socket))->write();
-            //std::make_shared<session>(io_context, std::move(socket))->read();
-
+            auto new_session =
+                std::make_shared<session>(io_context, std::move(socket));
+            std::thread th(&session::read, new_session);
+            th.detach();
+            new_session->write();
         }
         else {
             std::cerr << ec << "\n";

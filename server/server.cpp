@@ -21,6 +21,7 @@
 #include <nlohmann/json.hpp>
 #include <string_view>
 #include <utility>
+#include <chrono>
 
 using boost::asio::ip::tcp;
 using json = nlohmann::json;
@@ -52,14 +53,11 @@ public:
                     std::locale loc{ "" };
                     for (;;) { // while (true)
                         std::string data;
-                        timer.expires_from_now(std::chrono::seconds(10));
+                        timer.expires_from_now(std::chrono::minutes(10));
                         size_t m = boost::asio::async_read_until(
                             socket, boost::asio::dynamic_buffer(data), "\n", yield);
                         std::cout << "Message got" << std::endl;
                         // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/overview/core/line_based.html
-                        std::string str = "Hello, I`m server\n";
-                        boost::asio::async_write(
-                            socket, boost::asio::buffer(str), yield);
                     }
                 }
                 catch (std::exception& e) {
