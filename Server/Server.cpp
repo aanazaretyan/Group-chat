@@ -55,23 +55,12 @@ class session : public std::enable_shared_from_this<session> {
                     timer.expires_from_now(std::chrono::seconds(10));
                     size_t m = boost::asio::async_read_until(
                         socket, boost::asio::dynamic_buffer(data), "\n", yield);
+                    std::cout << "Message got" << std::endl;
                     // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/overview/core/line_based.html
-                    std::string_view text{data};
-                    if (m > 0 && !text.empty() && std::isdigit(text[0], loc)) {
-                        char str[] = "hello, ";
-                        int n = 0;
-                        auto [ptr, ec] = std::from_chars(
-                            text.data(), std::to_address(text.end()), n);
-                        if (ec == std::errc{}) {
-                            text.remove_prefix(size_t(ptr - text.data()));
-                            for (int i = 0; i < n; ++i)
-                                boost::asio::async_write(
-                                    socket, boost::asio::buffer(str), yield);
-                        }
+                    std::string str = "Hello, I`m server\n";
+                    boost::asio::async_write(
+                            socket, boost::asio::buffer(str), yield);
                     }
-                    boost::asio::async_write(socket, boost::asio::buffer(text),
-                                             yield);
-                }
             } catch (std::exception &e) {
                 socket.close();
                 timer.cancel();
@@ -116,6 +105,11 @@ int main(int argc, char *argv[]) {
                 tcp::socket socket(io_context);
                 acceptor.async_accept(socket, yield[ec]);
                 if (!ec) {
+                    std::cout << "New connection" << std::endl;
+                    std::string message = "Hi, you are connected!\n";
+                    socket.write_some(
+                        boost::asio::buffer(message.data(), message.size()),
+                        ec);
                     std::make_shared<session>(io_context, std::move(socket))
                         ->go();
                 } else {
@@ -131,3 +125,13 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+
+/*// Create an ec, which help us to catch errors
+boost::system::error_code ec;
+
+// Create a context
+boost::asio::io_context context;
+
+// Create the socket
+boost::asio::ip::tcp::socket socket(context);
+*/

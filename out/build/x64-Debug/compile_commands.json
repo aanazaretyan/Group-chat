@@ -1,0 +1,57 @@
+[
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 -std:c++latest /Foexternal\\doctest\\CMakeFiles\\doctest.dir\\doctest.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\external\\doctest\\doctest.cpp",
+  "file": "C:/Programming/Group-chat/external/doctest/doctest.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoServer\\CMakeFiles\\server_test.dir\\test.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\server\\test.cpp",
+  "file": "C:/Programming/Group-chat/server/test.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoServer\\CMakeFiles\\server_test.dir\\lib.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\server\\lib.cpp",
+  "file": "C:/Programming/Group-chat/server/lib.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest -IC:\\local\\boost_1_74_0 -IC:\\Users\\User\\.conan\\data\\fmt\\7.1.2\\_\\_\\package\\d057732059ea44a47760900cb5e4855d2bea8714\\include -IC:\\Users\\User\\.conan\\data\\nlohmann_json\\3.9.1\\_\\_\\package\\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\\include /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoServer\\CMakeFiles\\server.dir\\server.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\server\\server.cpp",
+  "file": "C:/Programming/Group-chat/server/server.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest -IC:\\local\\boost_1_74_0 -IC:\\Users\\User\\.conan\\data\\fmt\\7.1.2\\_\\_\\package\\d057732059ea44a47760900cb5e4855d2bea8714\\include -IC:\\Users\\User\\.conan\\data\\nlohmann_json\\3.9.1\\_\\_\\package\\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\\include /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoServer\\CMakeFiles\\server.dir\\lib.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\server\\lib.cpp",
+  "file": "C:/Programming/Group-chat/server/lib.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoClient\\CMakeFiles\\client_test.dir\\test.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\client\\test.cpp",
+  "file": "C:/Programming/Group-chat/client/test.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoClient\\CMakeFiles\\client_test.dir\\lib.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\client\\lib.cpp",
+  "file": "C:/Programming/Group-chat/client/lib.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoClient\\CMakeFiles\\client_test.dir\\rsa.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\client\\rsa.cpp",
+  "file": "C:/Programming/Group-chat/client/rsa.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest -IC:\\local\\boost_1_74_0 -IC:\\Users\\User\\.conan\\data\\fmt\\7.1.2\\_\\_\\package\\d057732059ea44a47760900cb5e4855d2bea8714\\include -IC:\\Users\\User\\.conan\\data\\nlohmann_json\\3.9.1\\_\\_\\package\\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\\include /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoClient\\CMakeFiles\\client.dir\\client.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\client\\client.cpp",
+  "file": "C:/Programming/Group-chat/client/client.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest -IC:\\local\\boost_1_74_0 -IC:\\Users\\User\\.conan\\data\\fmt\\7.1.2\\_\\_\\package\\d057732059ea44a47760900cb5e4855d2bea8714\\include -IC:\\Users\\User\\.conan\\data\\nlohmann_json\\3.9.1\\_\\_\\package\\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\\include /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoClient\\CMakeFiles\\client.dir\\lib.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\client\\lib.cpp",
+  "file": "C:/Programming/Group-chat/client/lib.cpp"
+},
+{
+  "directory": "C:/Programming/Group-chat/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~2\\2019\\COMMUN~1\\VC\\Tools\\MSVC\\1428~1.299\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -I..\\..\\..\\external\\doctest -IC:\\local\\boost_1_74_0 -IC:\\Users\\User\\.conan\\data\\fmt\\7.1.2\\_\\_\\package\\d057732059ea44a47760900cb5e4855d2bea8714\\include -IC:\\Users\\User\\.conan\\data\\nlohmann_json\\3.9.1\\_\\_\\package\\5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9\\include /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 -std:c++latest /FoClient\\CMakeFiles\\client.dir\\rsa.cpp.obj /FdTARGET_COMPILE_PDB /FS -c C:\\Programming\\Group-chat\\client\\rsa.cpp",
+  "file": "C:/Programming/Group-chat/client/rsa.cpp"
+}
+]
