@@ -43,9 +43,17 @@ public:
             self](boost::asio::yield_context yield) {
 
                 try {
+                    std::string message, colon;
+                    std::cout << "Enter your name:\n";
+                    std::getline(std::cin, message);
+                    colon = ": ";
+                    for (auto i : colon) {
+                        message += i;
+                    }
                     for (;;) {
-                        std::string message;
-                        std::getline(std::cin, message);
+                        std::string body;
+                        std::getline(std::cin, body);
+                        message += body;
                         boost::asio::async_write(
                             socket, boost::asio::buffer(message + "\n"), yield);
                     }
@@ -86,10 +94,12 @@ int main(int argc, char* argv[]) {
         boost::asio::io_context io_context;
         boost::system::error_code ec;
         tcp::socket socket(io_context);
-        std::string addr = "127.0.0.1";
-        unsigned short port = 1234;
+        //std::string addr = "127.0.0.1";
+        //unsigned short port = 1234;
+        std::string addr;
+        unsigned short port;
         std::cout << "Enter IP-address and port:" << std::endl;
-        //std::cin >> addr >> port;
+        std::cin >> addr >> port;
         boost::asio::ip::tcp::endpoint serv_addr(
             boost::asio::ip::make_address(addr, ec), port);
         socket.connect(serv_addr, ec);

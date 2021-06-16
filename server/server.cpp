@@ -16,12 +16,12 @@
 #include <boost/asio/steady_timer.hpp>
 #include <charconv>
 #include <iostream>
-#include <locale>
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <string_view>
 #include <utility>
 #include <chrono>
+#include "lib.hpp"
 
 using boost::asio::ip::tcp;
 using json = nlohmann::json;
@@ -37,26 +37,22 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
     };
 }
 
-class session : public std::enable_shared_from_this<session> {
-    // Curiosly recurring template pattern (CRTP)
-public:
-    explicit session(boost::asio::io_context& io_context, tcp::socket t_socket)
+    explicit session::session(boost::asio::io_context& io_context, tcp::socket t_socket)
         : socket(std::move(t_socket)), timer(io_context),
         strand(io_context.get_executor()) {}
 
-    void go() {
+    void session:: go() {
         auto self(shared_from_this());
         boost::asio::spawn(strand, [this,
             self](boost::asio::yield_context yield) {
                 try {
                     // std::array<char, 128> data;
-                    std::locale loc{ "" };
                     for (;;) { // while (true)
                         std::string data;
                         timer.expires_from_now(std::chrono::minutes(10));
                         size_t m = boost::asio::async_read_until(
                             socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                        std::cout << "Message got" << std::endl;
+                        std::cout << data;
                         // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/overview/core/line_based.html
                     }
                 }
@@ -69,7 +65,7 @@ public:
         boost::asio::spawn(strand, delegate(self, &session::timer_callback));
     }
 
-    void timer_callback(boost::asio::yield_context yield) {
+    void session:: timer_callback(boost::asio::yield_context yield) {
         while (socket.is_open()) {
             boost::system::error_code ignored_ec;
             timer.async_wait(yield[ignored_ec]);
@@ -77,12 +73,6 @@ public:
                 socket.close();
         }
     }
-
-private:
-    tcp::socket socket;
-    boost::asio::steady_timer timer;
-    boost::asio::strand<boost::asio::io_context::executor_type> strand;
-};
 
 int main(int argc, char* argv[]) {
     try {
@@ -107,10 +97,10 @@ int main(int argc, char* argv[]) {
                     std::cout << "New connection" << std::endl;
                     std::string message = "Hi, you are connected!\n";
                     socket.write_some(
-                        boost::asio::buffer(message.data(), message.size()),
-                        ec);
-                    std::make_shared<session>(io_context, std::move(socket))
-                        ->go();
+                        boost::asio::buffer(message.data(), message.size()), ec);
+                    auto sess = std::make_shared<session>(io_context, std::move(socket));
+                    //session::users.push_back(sess);
+                    sess -> go();
                 }
                 else {
                     std::cerr << ec << "\n";
@@ -126,11 +116,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
-/*// Create an ec, which help us to catch errors
-boost::system::error_code ec;
-// Create a context
-boost::asio::io_context context;
-// Create the socket
-boost::asio::ip::tcp::socket socket(context);
-*/
