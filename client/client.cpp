@@ -1,5 +1,5 @@
 #include <iostream>
-#include "lib.hpp"
+#include "client.hpp"
 #include <iostream>
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
@@ -46,10 +46,8 @@ public:
                     std::string message, colon;
                     std::cout << "Enter your name:\n";
                     std::getline(std::cin, message);
-                    colon = ": ";
-                    for (auto i : colon) {
-                        message += i;
-                    }
+                    session::ID = message;
+                    message += ": ";
                     for (;;) {
                         std::string body;
                         std::getline(std::cin, body);
@@ -60,6 +58,7 @@ public:
                 }
                 catch (std::exception& e) {
                     socket.close();
+                    std::cerr << "Exception: " << e.what() << "\n";
                 }
             });
     }
@@ -70,7 +69,7 @@ public:
                 try {
                     for (;;) {
                         std::string data;
-                        size_t m = boost::asio::async_read_until(
+                        boost::asio::async_read_until(
                             socket, boost::asio::dynamic_buffer(data), "\n",
                             yield);
                         std::string_view text{ data };
@@ -79,6 +78,7 @@ public:
                 }
                 catch (std::exception& e) {
                     socket.close();
+                    std::cerr << "Exception: " << e.what() << "\n";
                 }
             });
     }
@@ -89,17 +89,17 @@ private:
 };
 
 
-int main(int argc, char* argv[]) {
+int main() {
     try {
         boost::asio::io_context io_context;
         boost::system::error_code ec;
         tcp::socket socket(io_context);
-        //std::string addr = "127.0.0.1";
-        //unsigned short port = 1234;
-        std::string addr;
-        unsigned short port;
-        std::cout << "Enter IP-address and port:" << std::endl;
-        std::cin >> addr >> port;
+        std::string addr = "127.0.0.1";
+        unsigned short port = 1234;
+        //std::string addr;
+        //unsigned short port;
+        //std::cout << "Enter IP-address and port:" << std::endl;
+        //std::cin >> addr >> port;
         boost::asio::ip::tcp::endpoint serv_addr(
             boost::asio::ip::make_address(addr, ec), port);
         socket.connect(serv_addr, ec);

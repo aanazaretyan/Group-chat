@@ -1,4 +1,4 @@
-#include "lib.hpp"
+#include "server.hpp"
 
 int not_random() { return 3; }
 

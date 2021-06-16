@@ -1,13 +1,3 @@
-//
-// echo_server.cpp
-// ~~~~~~~~~~~~~~~
-//
-// Copyright (c) 2003-2021 Christopher M. Kohlhoff (chris at kohlhoff dot com)
-//
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-//
-
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 #include <boost/asio/io_context.hpp>
@@ -21,7 +11,7 @@
 #include <string_view>
 #include <utility>
 #include <chrono>
-#include "lib.hpp"
+#include "server.hpp"
 
 using boost::asio::ip::tcp;
 using json = nlohmann::json;
@@ -37,33 +27,33 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
     };
 }
 
-    explicit session::session(boost::asio::io_context& io_context, tcp::socket t_socket)
-        : socket(std::move(t_socket)), timer(io_context),
-        strand(io_context.get_executor()) {}
+session::session(boost::asio::io_context& io_context, tcp::socket t_socket)
+    : socket(std::move(t_socket)), timer(io_context),
+    strand(io_context.get_executor()) {}
 
-    void session:: go() {
-        auto self(shared_from_this());
-        boost::asio::spawn(strand, [this,
-            self](boost::asio::yield_context yield) {
-                try {
-                    // std::array<char, 128> data;
-                    for (;;) { // while (true)
-                        std::string data;
-                        timer.expires_from_now(std::chrono::minutes(10));
-                        size_t m = boost::asio::async_read_until(
-                            socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                        std::cout << data;
-                        // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/overview/core/line_based.html
-                    }
-                }
-                catch (std::exception& e) {
-                    socket.close();
-                    timer.cancel();
-                }
-            });
+void session::go() {
+    auto self(shared_from_this());
+    boost::asio::spawn(strand, [this,
+        self](boost::asio::yield_context yield) {
+        
+        try {
+            for (;;) {
+                std::string data;
+                timer.expires_from_now(std::chrono::minutes(10));
+                boost::asio::async_read_until(
+                    socket, boost::asio::dynamic_buffer(data), "\n", yield);
+                std::cout << data;
+                // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/overview/core/line_based.html
+            }
+        } catch (std::exception& e) {
+            socket.close();
+            timer.cancel();
+            std::cerr << "Exception: " << e.what() << "\n";
+        }
+    });
 
-        boost::asio::spawn(strand, delegate(self, &session::timer_callback));
-    }
+    boost::asio::spawn(strand, delegate(self, &session::timer_callback));
+}
 
     void session:: timer_callback(boost::asio::yield_context yield) {
         while (socket.is_open()) {
@@ -73,17 +63,13 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
                 socket.close();
         }
     }
+    
+    std::vector<std::shared_ptr<session>> session::users;
+    
 
-int main(int argc, char* argv[]) {
+    int main() {
     try {
         unsigned short port = 1234;
-        if (argc > 1)
-            port = static_cast<unsigned short>(std::atoi(argv[1]));
-        // if (argc != 2) {
-        //     std::cerr << "Usage: echo_server <port>\n";
-        //     return 1;
-        // }
-
         boost::asio::io_context io_context;
 
         boost::asio::spawn(io_context, [&](boost::asio::yield_context yield) {
@@ -99,14 +85,14 @@ int main(int argc, char* argv[]) {
                     socket.write_some(
                         boost::asio::buffer(message.data(), message.size()), ec);
                     auto sess = std::make_shared<session>(io_context, std::move(socket));
-                    //session::users.push_back(sess);
+                    session::users.push_back(sess);
                     sess -> go();
                 }
                 else {
                     std::cerr << ec << "\n";
                 }
             }
-            });
+        });
 
         io_context.run();
     }
