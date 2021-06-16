@@ -11,6 +11,8 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <string_view>
+#include <thread>
+#include <sstream>
 
 
 using boost::asio::ip::tcp;
@@ -41,14 +43,19 @@ public:
             self](boost::asio::yield_context yield) {
 
                 try {
+                    std::string message, colon;
+                    std::cout << "Enter your name:\n";
+                    std::getline(std::cin, message);
+                    colon = ": ";
+                    for (auto i : colon) {
+                        message += i;
+                    }
                     for (;;) {
-                        std::string message;
-                        std::cin >> message;
-                        message += "\n";
+                        std::string body;
+                        std::getline(std::cin, body);
+                        message += body;
                         boost::asio::async_write(
-                            socket, boost::asio::buffer(message), yield);
-
-
+                            socket, boost::asio::buffer(message + "\n"), yield);
                     }
                 }
                 catch (std::exception& e) {
@@ -76,21 +83,23 @@ public:
             });
     }
 
-
 private:
     tcp::socket socket;
     boost::asio::strand<boost::asio::io_context::executor_type> strand;
 };
+
 
 int main(int argc, char* argv[]) {
     try {
         boost::asio::io_context io_context;
         boost::system::error_code ec;
         tcp::socket socket(io_context);
-        std::string addr = "127.0.0.1";
-        unsigned short port = 1234;
+        //std::string addr = "127.0.0.1";
+        //unsigned short port = 1234;
+        std::string addr;
+        unsigned short port;
         std::cout << "Enter IP-address and port:" << std::endl;
-        //std::cin >> addr >> port;
+        std::cin >> addr >> port;
         boost::asio::ip::tcp::endpoint serv_addr(
             boost::asio::ip::make_address(addr, ec), port);
         socket.connect(serv_addr, ec);
@@ -105,9 +114,11 @@ int main(int argc, char* argv[]) {
                     std::cout << c;
                 }
             }
-            std::make_shared<session>(io_context, std::move(socket))->write();
-            //std::make_shared<session>(io_context, std::move(socket))->read();
-
+            auto new_session =
+                std::make_shared<session>(io_context, std::move(socket));
+            std::thread th(&session::read, new_session);
+            th.detach();
+            new_session->write();
         }
         else {
             std::cerr << ec << "\n";
@@ -121,83 +132,3 @@ int main(int argc, char* argv[]) {
     system("pause");
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*class Session {
-  public:
-    void work(boost::asio::yield_context yield) {
-        try {
-            for (;;) {
-                std::string data;
-                size_t m = boost::asio::async_read_until(
-                    socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                std::string_view text{data};
-                if (m > 0 && !text.empty()) {
-                    for (auto c : data) {
-                        std::cout << c;
-                    }
-                }
-                std::string message;
-                std::cin >> message;
-                boost::asio::async_write(socket, boost::asio::buffer(message),
-                                         yield);
-            }
-        } catch (std::exception &e) {
-            std::cout << "Some errors...";
-        }
-    }
-};
-int main() {
-    // Create an ec, which help us to catch errors
-    boost::system::error_code ec;
-    // Create a context
-    boost::asio::io_context context;
-    // Set server address
-    std::string addr;
-    unsigned short port;
-    std::cout << "Enter IP-address and port:" << std::endl;
-    std::cin >> addr >> port;
-    boost::asio::ip::tcp::endpoint serv_addr(
-        boost::asio::ip::make_address(addr, ec), port);
-    // Create the socket
-    boost::asio::ip::tcp::socket socket(context);
-    // Connection to server on local machine
-    socket.connect(serv_addr, ec);
-    if (ec) {
-        std::cout << "Connection failed:" << std::endl << ec.message() << std::endl;
-        return 1;
-        system("pause");
-    }
-    if (socket.is_open()) {
-
-        boost::asio::spawn(context, Session -> work);
-
-
-
-        socket.wait(socket.wait_read);
-        size_t bytes = socket.available();
-        if (bytes > 0) {
-            std::vector<char> data(bytes);
-            socket.read_some(boost::asio::buffer(data.data(), data.size()), ec);
-            for (auto c : data) {
-                std::cout << c;
-            }
-            bytes = 0;
-        }
-        std::string message;
-        std::cin >> message;
-        socket.write_some(boost::asio::buffer(message.data(), message.size()), ec);
-    }
-    system("pause");
-    return 0;
-}*/
