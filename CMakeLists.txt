@@ -22,6 +22,7 @@ foreach(language ${languages})
   endif()
 endforeach()
 conan_cmake_run(
+
   CONANFILE conanfile.txt
   BASIC_SETUP CMAKE_TARGETS BUILD missing
   ENV CONAN_CMAKE_PROGRAM="${CMAKE_COMMAND}" ${ENV}
@@ -29,7 +30,7 @@ conan_cmake_run(
 
 # При использовании статической библиотеки нет необходимости копировать dll
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost REQUIRED COMPONENTS system coroutine)
+find_package(Boost REQUIRED COMPONENTS system coroutine math_tr1)
 
 enable_testing()
 add_subdirectory(external/doctest)
