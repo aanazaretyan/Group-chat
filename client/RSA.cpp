@@ -1,10 +1,16 @@
 #include "client.hpp"
+#include <array>
+#include <boost/math/constants/constants.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
+#include <botan/rng.h>
+#include <botan/system_rng.h>
 #include <cmath>
 #include <iostream>
 #include <limits>
 #include <new>
 #include <random>
 #include <stdint.h>
+
 
 /**Проверка на простые числа*/
 bool isPrime(boost::multiprecision::cpp_int number) {

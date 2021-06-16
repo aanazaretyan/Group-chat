@@ -29,64 +29,51 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
     };
 }
 
-class session : public std::enable_shared_from_this<session> {
-    // Curiosly recurring template pattern (CRTP)
-public:
-    explicit session(boost::asio::io_context& io_context, tcp::socket t_socket)
-        : socket(std::move(t_socket)), //timer(io_context),
-        strand(io_context.get_executor()) {
-    }
+session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
+    : socket(std::move(t_socket)), strand(io_context.get_executor()) {}
 
-    void write() {
-        auto self(shared_from_this());
-        boost::asio::spawn(strand, [this,
-            self](boost::asio::yield_context yield) {
+void session::write() {
+    auto self(shared_from_this());
+    boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
+        try {
+            std::string message, colon;
+            std::cout << "Enter your name:\n";
+            std::getline(std::cin, message);
+            session::ID = message;
+            message += ": ";
+            for (;;) {
+                std::string body;
+                std::getline(std::cin, body);
+                message += body;
+                boost::asio::async_write(
+                    socket, boost::asio::buffer(message + "\n"), yield);
+            }
+        } catch (std::exception &e) {
+            socket.close();
+            std::cerr << "Exception: " << e.what() << "\n";
+        }
+    });
+}
 
-                try {
-                    std::string message, colon;
-                    std::cout << "Enter your name:\n";
-                    std::getline(std::cin, message);
-                    session::ID = message;
-                    message += ": ";
-                    for (;;) {
-                        std::string body;
-                        std::getline(std::cin, body);
-                        message += body;
-                        boost::asio::async_write(
-                            socket, boost::asio::buffer(message + "\n"), yield);
-                    }
-                }
-                catch (std::exception& e) {
-                    socket.close();
-                    std::cerr << "Exception: " << e.what() << "\n";
-                }
-            });
-    }
-    void read() {
-        auto self(shared_from_this());
-        boost::asio::spawn(
-            strand, [this, self](boost::asio::yield_context yield) {
-                try {
-                    for (;;) {
-                        std::string data;
-                        boost::asio::async_read_until(
-                            socket, boost::asio::dynamic_buffer(data), "\n",
-                            yield);
-                        std::string_view text{ data };
-                        std::cout << text;
-                    }
-                }
-                catch (std::exception& e) {
-                    socket.close();
-                    std::cerr << "Exception: " << e.what() << "\n";
-                }
-            });
-    }
+void session::read() {
+    auto self(shared_from_this());
+    boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
+        try {
+            for (;;) {
+                std::string data;
+                boost::asio::async_read_until(
+                    socket, boost::asio::dynamic_buffer(data), "\n", yield);
+                std::string_view text{data};
+                std::cout << text;
+            }
+        } catch (std::exception &e) {
+            socket.close();
+            std::cerr << "Exception: " << e.what() << "\n";
+        }
+    });
+}
 
-private:
-    tcp::socket socket;
-    boost::asio::strand<boost::asio::io_context::executor_type> strand;
-};
+std::vector<std::shared_ptr<session>> session::users;
 
 
 int main() {
