@@ -5,15 +5,29 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/spawn.hpp>
 #include <boost/asio/steady_timer.hpp>
-#include <vector>
+#include <boost/math/constants/constants.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
+#include <iostream>
 #include <memory>
+#include <vector>
 
 int not_random();
-
+std::string encryption(std::string, long long, boost::multiprecision::cpp_int);
+std::string decryption(std::string, boost::multiprecision::cpp_int,
+                       boost::multiprecision::cpp_int);
+struct pairs keys();
+pairs open_key();
+boost::multiprecision::cpp_int
+    fast_exponentiation(boost::multiprecision::cpp_int,
+                        boost::multiprecision::cpp_int);
+std::array<uint8_t, 128> Generating_a_prime_number();
+long long Generating_e(boost::multiprecision::cpp_int);
+boost::multiprecision::cpp_int Generating_d(boost::multiprecision::cpp_int,
+                                            long long);
 class session : public std::enable_shared_from_this<session> {
-
   public:
-    explicit session(boost::asio::io_context &io_context, boost::asio::ip::tcp::socket t_socket);
+    explicit session(boost::asio::io_context &io_context,
+                     boost::asio::ip::tcp::socket t_socket);
     static std::vector<std::shared_ptr<session>> users;
     void write();
     void read();
