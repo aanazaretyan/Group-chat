@@ -12,10 +12,16 @@
 #include <vector>
 
 int not_random();
+/**Шифрование сообщения по алгоритму RSA*/
 std::string encryption(std::string, long long, boost::multiprecision::cpp_int);
 std::string decryption(std::string, boost::multiprecision::cpp_int,
                        boost::multiprecision::cpp_int);
-struct pairs keys();
+struct pairs {
+    std::pair<long long, boost::multiprecision::cpp_int>
+        open_key;
+    std::pair<boost::multiprecision::cpp_int, boost::multiprecision::cpp_int>
+        private_key;
+};
 pairs open_key();
 boost::multiprecision::cpp_int
     fast_exponentiation(boost::multiprecision::cpp_int,
