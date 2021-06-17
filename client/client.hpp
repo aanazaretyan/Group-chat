@@ -14,29 +14,24 @@
 
 int not_random();
 /**Шифрование сообщения по алгоритму RSA*/
-std::string encryption(std::string, unsigned long long, unsigned long long);
-std::string decryption(std::string, unsigned long long,
-                       unsigned long long );
+std::vector<int> encryption(std::string, long int, long int);
+std::string decryption(std::vector<int>, long int,
+                       long int);
 struct pairs {
-    std::pair<unsigned long long, unsigned long long>
+    std::pair<long int, long int>
         open_key;
-    std::pair<unsigned long long, unsigned long long>
+    std::pair<long int, long int>
         private_key;
 };
 pairs keys();
-unsigned long long
-    fast_exponentiation(unsigned long long,
-                        unsigned long long);
-unsigned long long Generating_a_prime_number();
-unsigned long long Generating_e(unsigned long long);
-unsigned long long Generating_d(unsigned long long,
-                                            long long);
-unsigned long long modexpop(unsigned long long ,
-                                        long long ,
-                                        unsigned long long);
-unsigned long long modexppr(unsigned long long x,
-                                        unsigned long long y,
-                                        unsigned long long N);                                                                                   
+long int
+    fast_exponentiation(long int,
+                        long int);
+long int Generating_a_prime_number();
+long int Generating_e(long int);
+long int Generating_d(long int,
+                                            long int);
+long int modexpop(long int , long int , long int);                                                                                 
 class session : public std::enable_shared_from_this<session> {
   public:
     explicit session(boost::asio::io_context &io_context,

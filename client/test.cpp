@@ -13,15 +13,15 @@
 #include <string>
 #include <random>
 
-unsigned long long num1 = 5;
-unsigned long long num2 = 7;
-unsigned long long numL = int(pow(5, 7));
+long int num1 = 5;
+long int num2 = 7;
+long int numL = int(pow(5, 7));
 TEST_CASE("Fast_exponentiation") {
     REQUIRE(numL == fast_exponentiation(num1, num2));
 }
 TEST_CASE("First test") {
-    unsigned long long p = Generating_a_prime_number();
-    unsigned long long q = Generating_a_prime_number();
+    long int p = Generating_a_prime_number();
+    long int q = Generating_a_prime_number();
     REQUIRE(p!=q); };
 TEST_CASE("Second test") {
     std::string text = "He";
@@ -30,5 +30,7 @@ TEST_CASE("Second test") {
     auto dec_message = decryption(enc_message,v.private_key.first,v.private_key.second);  
     REQUIRE(text == dec_message);
 }
-
-
+TEST_CASE("Simple test") {    
+auto a = modexpop(5, 6, 8);
+REQUIRE(a == 1);
+}
