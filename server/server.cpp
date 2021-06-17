@@ -4,6 +4,7 @@
 
 using boost::asio::ip::tcp;
 
+//заимствование с семинара
 template <typename Class, typename Function>
 auto delegate(std::shared_ptr<Class> ptr, Function fun) {
     return [ ptr, fun ]<typename... Args>(Args && ... arg) {
@@ -14,7 +15,9 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
 session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
     : socket(std::move(t_socket)), timer(io_context),
       strand(io_context.get_executor()) {}
+//конец взаимствования 
 
+/** Функция класса session, которая все полученые  на сервер сообщения передаёт всем клиентам */
 void session::go(std::string ID) {
     auto self(shared_from_this());
     boost::asio::spawn(
@@ -31,7 +34,7 @@ void session::go(std::string ID) {
                                 reader.first->socket,
                                 boost::asio::buffer(ID + ": " + data), yield);
                         } else {
-                            boost::asio::async_write(
+                            boost::asio::async_write( // если сервер понимает, что клиент, которому сейчас должен отправить сообщение является автором, то вместо имени автора пишет "You".
                                 reader.first->socket,
                                 boost::asio::buffer("You: " + data), yield);
                         }
@@ -60,6 +63,7 @@ void session::timer_callback(boost::asio::yield_context yield) {
 std::vector<std::pair<std::shared_ptr<session>, std::string>> session::clients;
 std::vector<std::pair<std::shared_ptr<session>, std::string>> session::readers;
 
+//** Функция создаёт пару client-reader*/
 int main() {
     try {
         unsigned short port = 1234;
@@ -72,14 +76,15 @@ int main() {
                 boost::system::error_code ec;
                 tcp::socket socket(io_context);
                 acceptor.async_accept(socket, yield[ec]);
-                for (auto client : session::clients) {
+
+                for (auto client : session::clients) { //цикл удаляет указатель из массива, если сокет клиента уже закрыт
                     if (!(client.first->socket.is_open())) {
                         session::clients.erase(
                             std::find(session::clients.begin(),
                                       session::clients.end(), client));
                     }
                 }
-                for (auto reader : session::readers) {
+                for (auto reader : session::readers) { //цикл удаляет указатель из массива, если сокет reader`а уже закрыт
                     if (!(reader.first->socket.is_open())) {
                         session::readers.erase(
                             std::find(session::readers.begin(),
@@ -96,7 +101,7 @@ int main() {
                     boost::asio::async_read_until(
                         socket, boost::asio::dynamic_buffer(ID), "\n", yield);
                     ID.pop_back();
-                    if (ID[0] == 'c') {
+                    if (ID[0] == 'c') {//первым сообщением клиент или reader отправляют опознавательный знак, чтобы сервер их различал
                         ID.erase(0, 1);
                         for (auto client : session::clients) {
                             if (client.second == ID) {
@@ -116,7 +121,7 @@ int main() {
                         session::clients.push_back(sess);
                     } else {
                         ID.erase(0, 1);
-                        for (auto client : session::clients) {
+                        for (auto client : session::clients) { //много условий, из-за которых сервер закроет соединение
                             if (client.second == ID) {
                                 for (auto reader : session::readers) {
                                     if (reader.second == ID) {

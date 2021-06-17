@@ -5,6 +5,7 @@
 
 using boost::asio::ip::tcp;
 
+//заимствование с семинара
 template <typename Class, typename Function>
 auto delegate(std::shared_ptr<Class> ptr, Function fun) {
     return [ ptr, fun ]<typename... Args>(Args && ... arg) {
@@ -14,7 +15,10 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
 
 session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
     : socket(std::move(t_socket)), strand(io_context.get_executor()) {}
+//конец заимствования
 
+/** Функция внутри класса session, которая постоянно проверяет
+        сообщения с клавиатуры и отправляет их в сеть*/
 void session::read() {
     auto self(shared_from_this());
     boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
@@ -39,6 +43,8 @@ void session::read() {
 
 std::vector<std::shared_ptr<session>> session::users;
 
+
+/** Функция подключает reader к серверу*/
 int main() {
     try {
         boost::asio::io_context io_context;

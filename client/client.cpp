@@ -5,6 +5,7 @@
 
 using boost::asio::ip::tcp;
 
+//заимствование с семинара
 template <typename Class, typename Function>
 auto delegate(std::shared_ptr<Class> ptr, Function fun) {
     return [ ptr, fun ]<typename... Args>(Args && ... arg) {
@@ -14,10 +15,11 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
 
 session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
     : socket(std::move(t_socket)), strand(io_context.get_executor()) {}
-
+//конец заимствовани€
 
 /** ‘ункци€ внутри класса session, котора€ посто€нно провер€ет 
         вход€щие сообщени€ и выводит на экран при получении*/
+
 void session::write() {
     auto self(shared_from_this());
     boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
@@ -26,7 +28,7 @@ void session::write() {
             std::string ID;
             for (;;) {
                 std::cout << "Enter your name: ";
-                std::getline(std::cin, ID);
+                std::getline(std::cin, ID); //запрет на им€ меньше 3 символов, при вводе имени 0, 1, 2 символа клиент будет запрашивать им€ повторно, пока не получит разрешЄнное
                 if (ID.size() < 3) {
                     std::cout << "Incorrect name. You should use longer name\n";
                 } else {
@@ -35,9 +37,9 @@ void session::write() {
                 }
             }
             boost::asio::async_write(
-                socket, boost::asio::buffer("c" + ID + "\n"), yield);
+                socket, boost::asio::buffer("c" + ID + "\n"), yield); //c - нужно, чтобы сервер мог пон€ть, client это или reader.
 
-            for (;;) {
+            for (;;) { //в этом цикле async_write и async_read наход€тс€ в специальном пор€дке, в каком этого требует сервер.
                 std::string data;
                 boost::asio::async_read_until(
                     socket, boost::asio::dynamic_buffer(data), "\n", yield);
@@ -48,13 +50,13 @@ void session::write() {
                 data = "";
                 boost::asio::async_read_until(
                     socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                if (data == "Connected to Reader\n") {
+                if (data == "Connected to Reader\n") { //при удачном соединении с reader`ом, сервер присылает данную строку. ≈сли прислал другую - значит произошла ошибка. » будет запущено присоединение к reader`у повторно.
                     std::cout << data;
                     break;
                 }
             }
 
-            for (;;) {
+            for (;;) { // основной цикл отправки сообщений
                 std::string body;
                 std::getline(std::cin, body);
                 boost::asio::async_write(
@@ -69,6 +71,8 @@ void session::write() {
 
 std::vector<std::shared_ptr<session>> session::users;
 
+
+/** ¬ функции происходит соединение к серверу*/
 int main() {
     try {
         boost::asio::io_context io_context;
@@ -76,16 +80,16 @@ int main() {
         tcp::socket socket(io_context);
         std::string addr = "127.0.0.1";
         unsigned short port = 1234;
-        // std::string addr;
-        // unsigned short port;
-        // std::cout << "Enter IP-address and port:" << std::endl;
-        // std::cin >> addr >> port;
+        //std::string addr;
+        //unsigned short port;
+        //std::cout << "Enter IP-address and port:" << std::endl;
+        //std::cin >> addr >> port;
         boost::asio::ip::tcp::endpoint serv_addr(
             boost::asio::ip::make_address(addr, ec), port);
         socket.connect(serv_addr, ec);
 
         if (!ec) {
-            socket.wait(socket.wait_read);
+            socket.wait(socket.wait_read); //ожидание и чтение об€зательного сообщени€ с сервера.
             size_t bytes = socket.available();
             if (bytes > 0) {
                 std::vector<char> data(bytes);
@@ -95,9 +99,7 @@ int main() {
                     std::cout << c;
                 }
             }
-            auto new_session =
-                std::make_shared<session>(io_context, std::move(socket));
-            new_session->write();
+            std::make_shared<session>(io_context, std::move(socket))->write();
         } else {
             std::cerr << ec << "\n";
         }
