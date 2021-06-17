@@ -1,30 +1,13 @@
-#include <iostream>
 #include "client.hpp"
-#include <iostream>
-#include <boost/asio.hpp>
-#include <boost/asio/buffer.hpp>
-#include <boost/asio/io_context.hpp>
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/asio/spawn.hpp>
 #include <charconv>
 #include <iostream>
-#include <memory>
-#include <nlohmann/json.hpp>
-#include <string_view>
-#include <thread>
 #include <sstream>
 
-
 using boost::asio::ip::tcp;
-using json = nlohmann::json;
-// TODO: add tests
-// TODO: add HTTP
-// TODO: add json
 
 template <typename Class, typename Function>
 auto delegate(std::shared_ptr<Class> ptr, Function fun) {
-    // return [ptr = std::move(ptr), fun]() {
-    return[ptr, fun]<typename... Args>(Args && ...arg) {
+    return [ ptr, fun ]<typename... Args>(Args && ... arg) {
         return (ptr.get()->*fun)(std::forward<Args>(arg)...);
     };
 }
@@ -32,16 +15,28 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
 session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
     : socket(std::move(t_socket)), strand(io_context.get_executor()) {}
 
+
+/** Функция внутри класса session, которая постоянно проверяет 
+        входящие сообщения и выводит на экран при получении*/
 void session::write() {
     auto self(shared_from_this());
     boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
         try {
-            for (int i = 0; i<2; i++){}
+
             std::string ID;
-            std::cout << "Enter your name: ";
-            std::getline(std::cin, ID);
+            for (;;) {
+                std::cout << "Enter your name: ";
+                std::getline(std::cin, ID);
+                if (ID.size() < 3) {
+                    std::cout << "Incorrect name. You should use longer name\n";
+                } else {
+                    std::cout << "Good job! Join reader.exe now\n";
+                    break;
+                }
+            }
             boost::asio::async_write(
                 socket, boost::asio::buffer("c" + ID + "\n"), yield);
+
             for (;;) {
                 std::string data;
                 boost::asio::async_read_until(
@@ -57,7 +52,6 @@ void session::write() {
                     std::cout << data;
                     break;
                 }
-            
             }
 
             for (;;) {
@@ -73,26 +67,7 @@ void session::write() {
     });
 }
 
-/*void session::read() {
-    auto self(shared_from_this());
-    boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
-        try {
-            for (;;) {
-                std::string data;
-                boost::asio::async_read_until(
-                    socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                std::string_view text{data};
-                std::cout << text;
-            }
-        } catch (std::exception &e) {
-            socket.close();
-            std::cerr << "Exception: " << e.what() << "\n";
-        }
-    });
-}*/
-
 std::vector<std::shared_ptr<session>> session::users;
-
 
 int main() {
     try {
@@ -101,10 +76,10 @@ int main() {
         tcp::socket socket(io_context);
         std::string addr = "127.0.0.1";
         unsigned short port = 1234;
-        //std::string addr;
-        //unsigned short port;
-        //std::cout << "Enter IP-address and port:" << std::endl;
-        //std::cin >> addr >> port;
+        // std::string addr;
+        // unsigned short port;
+        // std::cout << "Enter IP-address and port:" << std::endl;
+        // std::cin >> addr >> port;
         boost::asio::ip::tcp::endpoint serv_addr(
             boost::asio::ip::make_address(addr, ec), port);
         socket.connect(serv_addr, ec);
@@ -114,24 +89,21 @@ int main() {
             size_t bytes = socket.available();
             if (bytes > 0) {
                 std::vector<char> data(bytes);
-                socket.read_some(boost::asio::buffer(data.data(), data.size()), ec);
+                socket.read_some(boost::asio::buffer(data.data(), data.size()),
+                                 ec);
                 for (auto c : data) {
                     std::cout << c;
                 }
             }
             auto new_session =
                 std::make_shared<session>(io_context, std::move(socket));
-            //std::thread th(&session::read, new_session);
-            //th.detach();
             new_session->write();
-        }
-        else {
+        } else {
             std::cerr << ec << "\n";
         }
 
         io_context.run();
-    }
-    catch (std::exception& e) {
+    } catch (std::exception &e) {
         std::cerr << "Exception: " << e.what() << "\n";
     }
     system("pause");
