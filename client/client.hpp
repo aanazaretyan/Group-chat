@@ -14,10 +14,9 @@ class session : public std::enable_shared_from_this<session> {
 
   public:
     explicit session(boost::asio::io_context &io_context, boost::asio::ip::tcp::socket t_socket);
-    static std::vector<std::shared_ptr<session>> users;
     void write();
-    void read();
-    std::string ID;
+    //void read();
+    static std::vector<std::shared_ptr<session>> users;
 
   private:
     boost::asio::ip::tcp::socket socket;

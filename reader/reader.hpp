@@ -11,17 +11,13 @@
 int not_random();
 
 class session : public std::enable_shared_from_this<session> {
-  
-public:
+
+  public:
     explicit session(boost::asio::io_context &io_context, boost::asio::ip::tcp::socket t_socket);
-    void go(std::string ID);
-    void timer_callback(boost::asio::yield_context);
-    static std::vector<std::pair<std::shared_ptr<session>, std::string>> clients;
-    static std::vector<std::pair<std::shared_ptr<session>, std::string>> readers;
-    boost::asio::ip::tcp::socket socket;
-    bool pair;
+    void read();
+    static std::vector<std::shared_ptr<session>> users;
 
   private:
-    boost::asio::steady_timer timer;
+    boost::asio::ip::tcp::socket socket;
     boost::asio::strand<boost::asio::io_context::executor_type> strand;
 };

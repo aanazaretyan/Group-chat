@@ -1,5 +1,5 @@
 #include <iostream>
-#include "client.hpp"
+#include "reader.hpp"
 #include <iostream>
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
@@ -9,14 +9,12 @@
 #include <charconv>
 #include <iostream>
 #include <memory>
-#include <nlohmann/json.hpp>
 #include <string_view>
 #include <thread>
 #include <sstream>
 
 
 using boost::asio::ip::tcp;
-using json = nlohmann::json;
 // TODO: add tests
 // TODO: add HTTP
 // TODO: add json
@@ -32,39 +30,20 @@ auto delegate(std::shared_ptr<Class> ptr, Function fun) {
 session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
     : socket(std::move(t_socket)), strand(io_context.get_executor()) {}
 
-void session::write() {
+void session::read() {
     auto self(shared_from_this());
     boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
         try {
-            for (int i = 0; i<2; i++){}
             std::string ID;
             std::cout << "Enter your name: ";
             std::getline(std::cin, ID);
             boost::asio::async_write(
-                socket, boost::asio::buffer("c" + ID + "\n"), yield);
+                socket, boost::asio::buffer("r" + ID + "\n"), yield);
             for (;;) {
                 std::string data;
                 boost::asio::async_read_until(
                     socket, boost::asio::dynamic_buffer(data), "\n", yield);
                 std::cout << data;
-                std::getline(std::cin, data);
-                boost::asio::async_write(
-                    socket, boost::asio::buffer(data + "\n"), yield);
-                data = "";
-                boost::asio::async_read_until(
-                    socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                if (data == "Connected to Reader\n") {
-                    std::cout << data;
-                    break;
-                }
-            
-            }
-
-            for (;;) {
-                std::string body;
-                std::getline(std::cin, body);
-                boost::asio::async_write(
-                    socket, boost::asio::buffer(body + "\n"), yield);
             }
         } catch (std::exception &e) {
             socket.close();
@@ -72,24 +51,6 @@ void session::write() {
         }
     });
 }
-
-/*void session::read() {
-    auto self(shared_from_this());
-    boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
-        try {
-            for (;;) {
-                std::string data;
-                boost::asio::async_read_until(
-                    socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                std::string_view text{data};
-                std::cout << text;
-            }
-        } catch (std::exception &e) {
-            socket.close();
-            std::cerr << "Exception: " << e.what() << "\n";
-        }
-    });
-}*/
 
 std::vector<std::shared_ptr<session>> session::users;
 
@@ -121,9 +82,7 @@ int main() {
             }
             auto new_session =
                 std::make_shared<session>(io_context, std::move(socket));
-            //std::thread th(&session::read, new_session);
-            //th.detach();
-            new_session->write();
+            new_session->read();
         }
         else {
             std::cerr << ec << "\n";
