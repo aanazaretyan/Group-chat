@@ -10,26 +10,33 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <random>
 
 int not_random();
 /**Шифрование сообщения по алгоритму RSA*/
-std::string encryption(std::string, long long, boost::multiprecision::cpp_int);
-std::string decryption(std::string, boost::multiprecision::cpp_int,
-                       boost::multiprecision::cpp_int);
+std::string encryption(std::string, unsigned long long, unsigned long long);
+std::string decryption(std::string, unsigned long long,
+                       unsigned long long );
 struct pairs {
-    std::pair<long long, boost::multiprecision::cpp_int>
+    std::pair<unsigned long long, unsigned long long>
         open_key;
-    std::pair<boost::multiprecision::cpp_int, boost::multiprecision::cpp_int>
+    std::pair<unsigned long long, unsigned long long>
         private_key;
 };
-pairs open_key();
-boost::multiprecision::cpp_int
-    fast_exponentiation(boost::multiprecision::cpp_int,
-                        boost::multiprecision::cpp_int);
-std::array<uint8_t, 128> Generating_a_prime_number();
-long long Generating_e(boost::multiprecision::cpp_int);
-boost::multiprecision::cpp_int Generating_d(boost::multiprecision::cpp_int,
+pairs keys();
+unsigned long long
+    fast_exponentiation(unsigned long long,
+                        unsigned long long);
+unsigned long long Generating_a_prime_number();
+unsigned long long Generating_e(unsigned long long);
+unsigned long long Generating_d(unsigned long long,
                                             long long);
+unsigned long long modexpop(unsigned long long ,
+                                        long long ,
+                                        unsigned long long);
+unsigned long long modexppr(unsigned long long x,
+                                        unsigned long long y,
+                                        unsigned long long N);                                                                                   
 class session : public std::enable_shared_from_this<session> {
   public:
     explicit session(boost::asio::io_context &io_context,
