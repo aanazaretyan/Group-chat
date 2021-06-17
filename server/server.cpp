@@ -18,8 +18,8 @@ session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
 //конец взаимствования 
 
 /** Функция класса session, которая все полученые  на сервер сообщения передаёт всем клиентам */
-void session::go(std::string ID) {
-    auto self(shared_from_this());
+void session::go(std::string ID) {//ID устройства, которое соединяется к серверу
+    auto self(shared_from_this()); //заимствование с семинара
     boost::asio::spawn(
         strand, [this, self, ID](boost::asio::yield_context yield) {
             try {

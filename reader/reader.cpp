@@ -20,16 +20,16 @@ session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
 /** Функция внутри класса session, которая постоянно проверяет
         сообщения с клавиатуры и отправляет их в сеть*/
 void session::read() {
-    auto self(shared_from_this());
+    auto self(shared_from_this()); //заимствование с семинара
     boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
         try {
-            std::string ID;
+            std::string ID; // ID reader`а
             std::cout << "Enter your name: ";
             std::getline(std::cin, ID);
             boost::asio::async_write(
                 socket, boost::asio::buffer("r" + ID + "\n"), yield);
             for (;;) {
-                std::string data;
+                std::string data; //строка, в которой хранится полученное с сети значение
                 boost::asio::async_read_until(
                     socket, boost::asio::dynamic_buffer(data), "\n", yield);
                 std::cout << data;
@@ -41,7 +41,7 @@ void session::read() {
     });
 }
 
-std::vector<std::shared_ptr<session>> session::users;
+std::vector<std::shared_ptr<session>> session::users; //массив указателей на сессии
 
 
 /** Функция подключает reader к серверу*/
@@ -71,9 +71,7 @@ int main() {
                     std::cout << c;
                 }
             }
-            auto new_session =
-                std::make_shared<session>(io_context, std::move(socket));
-            new_session->read();
+                std::make_shared<session>(io_context, std::move(socket)) ->read();
         } else {
             std::cerr << ec << "\n";
         }
