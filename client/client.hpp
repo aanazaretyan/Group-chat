@@ -26,12 +26,10 @@ boost::multiprecision::cpp_int Generating_d(boost::multiprecision::cpp_int,
                                             long long);
 class session : public std::enable_shared_from_this<session> {
   public:
-    explicit session(boost::asio::io_context &io_context,
-                     boost::asio::ip::tcp::socket t_socket);
-    static std::vector<std::shared_ptr<session>> users;
+    explicit session(boost::asio::io_context &io_context, boost::asio::ip::tcp::socket t_socket);
     void write();
-    void read();
-    std::string ID;
+    //void read();
+    static std::vector<std::shared_ptr<session>> users;
 
   private:
     boost::asio::ip::tcp::socket socket;
