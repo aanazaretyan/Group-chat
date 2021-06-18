@@ -1,31 +1,58 @@
 #include "catch.hpp"
 #include "client.hpp"
 #include <array>
-#include <boost/math/constants/constants.hpp>
-#include <boost/multiprecision/cpp_int.hpp>
-#include <botan/rng.h>
-#include <botan/system_rng.h>
 #include <iostream>
 #include <limits>
-#include <new>
 #include <random>
-#include <stdint.h>
 #include <string>
 #include <random>
 
-long int num1 = 5;
-long int num2 = 7;
-long int numL = int(pow(5, 7));
-TEST_CASE("Fast_exponentiation") {
-    REQUIRE(numL == fast_exponentiation(num1, num2));
-}
 TEST_CASE("First test") {
-    long int p = Generating_a_prime_number();
-    long int q = Generating_a_prime_number();
-    REQUIRE(p!=q); };
+    int p;
+    int q;
+    int n;
+    for (;;){
+        p = Generating_a_prime_number();
+        q = Generating_a_prime_number();
+        n = p * q;
+        if (p!=q && n > 94) break;
+
+    }
+    REQUIRE(p!=q ); };
+TEST_CASE("1 < e < f test") {
+    int p;
+    int q;
+    for (;;){
+        p = Generating_a_prime_number();
+        q = Generating_a_prime_number();
+        if (p!=q) break;
+
+    }
+    int f = (p - 1) * (q - 1);
+    int e = Generating_e(f);
+    bool a;
+    if (1 < e && e < f)  a = true;
+    REQUIRE( a  == true  );
+}   
+TEST_CASE("e and d mutual test"){
+    int p;
+    int q;
+    for (;;){
+        p = Generating_a_prime_number();
+        q = Generating_a_prime_number();
+        if (p!=q) break;
+
+    }
+    int f = (p - 1) * (q - 1);
+    int e = Generating_e(f);
+    int d = Generating_d(f, e);
+    REQUIRE((e * d) % f == 1 );
+
+}    
 TEST_CASE("Second test") {
-    std::string text = "He";
-    auto v = keys();
+    //std::string text = "Hellqwerwr";
+    std::string text = "qwertyuiop[]asdfghjkl;zxcvbnm,./1234567890!@#$%^&*()-_=+~`{}:?><QWERTYUIOPASDFGHJKLZXCVBNM";
+    auto v = psedo_rsa_keys();
     auto enc_message = encryption(text, v.open_key.first, v.open_key.second);  
     auto dec_message = decryption(enc_message,v.private_key.first,v.private_key.second);  
     REQUIRE(text == dec_message);
