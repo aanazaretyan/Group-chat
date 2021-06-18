@@ -16,7 +16,7 @@
 /**Проверка на простые числа. Смысл заключается в том,
 что мы делим наше число на несколько первых простых чисел, до 1000.
 Если поделилось, то наше число точно не простое*/
-bool isPrime(long int number) {
+bool isPrime(int number) {
     if (number < 2)
         return false; // отбросим числа 0, 1 и отрицательные числа, они не
                       // являются простыми
@@ -34,11 +34,11 @@ bool isPrime(long int number) {
         821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907,
         911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997};
     //Проверяем, есть ли наше число в LowPrimes
-    for (long int i : LowPrimes)
+    for (int i : LowPrimes)
         if (number == i)
             return true;
     //Проверяем делимость нашего числа на небольшие простые числа
-    for (long int i : LowPrimes)
+    for (int i : LowPrimes)
         if (number % i == 0)
             return false;
     return true;
@@ -46,22 +46,21 @@ bool isPrime(long int number) {
 
 /**Генерируется простое число.
 Проверка на то, что число простое, есть в функции isPrime*/
-long int Generating_a_prime_number() {
+int Generating_a_prime_number() {
     while (true) {
         std::random_device r;
         std::default_random_engine e1(r());
-        std::uniform_int_distribution<long int> uniform_dist(1,
-                                                              100);
-        long int num = uniform_dist(e1);                                                      
-        if (num % 2 == 0) num++;
+        std::uniform_int_distribution<int> uniform_dist(2, 80);
+        int num = uniform_dist(e1);
+        if (num % 2 == 0)
+            num++;
         if (isPrime(num))
             return num;
     }
 }
 /**Проверяет, взаимно ли простые два f(n) и открытый ключ е
 (или  два числа) на основе алгоритма Евклида*/
-bool Mutual_prime_numbers_test(long int f,
-                               long int e) {
+bool Mutual_prime_numbers_test(int f, int e) {
     while (f != 0 and e != 0) {
         if (f > e)
             f %= e;
@@ -75,40 +74,37 @@ bool Mutual_prime_numbers_test(long int f,
 }
 /**Генерируется число e (открытый ключ), проверяя, взаимно ли простое оно
 с помощью функции на основе функции Mutual_prime_numbers_test*/
-long int Generating_e(long int f) {
+int Generating_e(int f) {
     while (true) {
         std::random_device r;
         std::default_random_engine e1(r());
-        std::uniform_int_distribution<long int> uniform_dist(1,
-                                                              100);
-        long int e = uniform_dist(e1);
-        if (Mutual_prime_numbers_test(f, e) == true)
+        std::uniform_int_distribution<int> uniform_dist(2, 80);
+        int e = uniform_dist(e1);
+        if (Mutual_prime_numbers_test(f, e) == true and e<f )
             return e;
     }
 }
 /**Расширенный алгоритм Евклида.
 Функция взята из https://e-maxx.ru/algo/extended_euclid_algorithm*/
-auto gcd(long int a, long int b,
-         long int &x, long int &y) {
-    long int x1;
-    long int y1;
+auto gcd(int a, int b, int &x, int &y) {
+    int x1;
+    int y1;
     if (a == 0) {
         x = 0;
         y = 1;
         return b;
     }
-    long int d = gcd(b % a, a, x1, y1);
+    int d = gcd(b % a, a, x1, y1);
     x = y1 - (b / a) * x1;
     y = x1;
     return d;
 }
 /**Генерирует число d (закрытый ключ), так что e*d mod f == 1*/
-long int Generating_d(long int f,
-                                            long int e) {
+int Generating_d(int f, int e) {
     while (true) {
-        long int x;
-        long int y;
-        long int g = gcd(e, f, x, y);
+        int x;
+        int y;
+        int g = gcd(e, f, x, y);
         if (g == 1) {
             x = (x % f + f) % f;
             return x;
@@ -119,23 +115,28 @@ long int Generating_d(long int f,
 
 /**Генерируются открытый и закрытый ключи*/
 pairs keys() {
-    long int p = Generating_a_prime_number() ;
-    long int q = Generating_a_prime_number();
-    long int n = p * q;
-    long int f = (p - 1) * (q - 1);
-    long int e = Generating_e(f);
-    long int d = Generating_d(f, e);
-    std::pair<long long, long int> opkey = {e, n};
-    std::pair<long int, long int>
-        prkey = {d, n};
+    int p;
+    int q;
+    int n;
+    for (;;){
+        p = Generating_a_prime_number();
+        q = Generating_a_prime_number();
+        n = p * q;
+        if (p!=q and n> 94) break;
+
+    }
+    int f = (p - 1) * (q - 1);
+    int e = Generating_e(f);
+    int d = Generating_d(f, e);
+    std::pair<long long, int> opkey = {e, n};
+    std::pair<int, int> prkey = {d, n};
     pairs keys = {opkey, prkey};
     return keys;
 }
 /**Быстрое возведение числа в степень.
 Функция взята из http://mindhalls.ru/binary-power-in-c-cpp/*/
-long int fast_exponentiation(long int dec,
-                    long int d) {
-    long int result = 1;
+int fast_exponentiation(int dec, int d) {
+    int result = 1;
     while (d) {
         if (d % 2 == 0) {
             d /= 2;
@@ -147,40 +148,78 @@ long int fast_exponentiation(long int dec,
     }
     return result;
 }
-long int modexpop(long int x,
-                                        long int y,
-                                        long int N) {
+int modexpop(int x, int y, int N) {
     if (y == 0)
         return 1;
-    long int z = modexpop(x, y / 2, N);
+    int z = modexpop(x, y / 2, N);
     if (y % 2 == 0)
         return (z * z) % N;
     return (x * z * z) % N;
 };
- 
+
 /**Шифрование сообщения по алгоритму RSA*/
-std::vector<int> encryption(std::string message, long int e,
-                       long int n) {
+std::vector<int> encryption(std::string message, int e, int n) {
     std::vector<int> emessage;
-    std::map<char, long int> map  = {{'H',1}, {'e',2}};
-    //int g = map ['H'];
-    for (char i:message){
-        int l = map [i];
-        l = modexpop(l, e, n);
-        emessage.push_back(l);
+    std::map<char, int> map = {
+         {'a', 40},   {'b', 37},   {'c', 48},   {'d', 38},   {'e', 26},   {'f', 10},
+         {'g', 23},   {'h', 54},   {'i', 13},   {'j', 91},  {'k', 21},  {'l', 57},
+         {'m', 33},  {'n', 78},  {'o', 49},  {'p', 59},  {'q', 20},  {'r', 70},
+         {'s', 35},  {'t', 53},  {'u', 46},  {'v', 80},  {'w', 6},  {'x', 58},
+         {'y', 50},  {'z', 67},  {'A', 66},  {'B', 63},  {'C', 44},  {'D', 87},
+         {'E', 25},  {'F', 64},  {'G', 43},  {'H', 52},  {'I', 3},  {'J', 93},
+         {'K', 16},  {'L', 85},  {'M', 30},  {'N', 71},  {'O', 9},  {'P', 92},
+         {'Q', 29},  {'R', 51},  {'S', 45},  {'T', 81},  {'U', 42},  {'V', 69},
+         {'W', 8},  {'X', 77},  {'Y', 11},  {'Z', 88},  {'0', 4},  {'1', 76},
+         {'2', 31},  {'3', 55},  {'4', 34},  {'5', 68},  {'6', 2},  {'7', 73},
+         {'8', 39},  {'9', 86},  {'!', 22},  {'@', 84},  {'#', 28},  {'$', 74},
+         {'%', 5},  {'^', 94},  {'&', 18},  {'*', 82},  {'(', 17},  {')', 60},
+         {'-', 7},  {'=', 89},  {'+', 24},  {'_', 61},  {'{', 14},  {'}', 75},
+         {'[', 47},  {']', 83},  {';', 32},  {':', 65},  {'"', 27},  {'/', 62},
+         {'?', 19},  {'<', 90},  {'>', 36},  {'.', 79},  {',', 12},  {'`', 56},
+         {'~', 41},  {'|', 15},  {' ', 72}, };
+    for (char i : message) {
+        int g = map[i]; 
+        g = modexpop(g, e, n);
+        emessage.push_back(g);
     }
     return emessage;
 }
 
 /**Расшифрование сообщения по алгоритму RSA*/
-std::string decryption(std::vector<int> enc_message,
-                       long int d,
-                       long int n) {
-std::string dec_message;
-std::map<int, char> dmap = {{1,'H'}, {2,'e'}};
-    for (int i:enc_message){
-        i  = modexpop(i, d, n);
-        dec_message+=dmap[i];
+std::string decryption(std::vector<int> enc_message, int d, int n) {
+    std::string dec_message;
+    std::map<int, char> dmap = {
+        {40, 'a'},   {37, 'b'},   {48, 'c'},   {38, 'd'},   {26, 'e'},   {10, 'f'},
+        {23, 'g'},   {54, 'h'},   {13, 'i'},   {91, 'j'},  {21, 'k'},  {57, 'l'},
+        {33, 'm'},  {78, 'n'},  {49, 'o'},  {59, 'p'},  {20, 'q'},  {70, 'r'},
+        {35, 's'},  {53, 't'},  {46, 'u'},  {80, 'v'},  {6, 'w'},  {58, 'x'},
+        {50, 'y'},  {67, 'z'},  {66, 'A'},  {63, 'B'},  {44, 'C'},  {87, 'D'},
+        {25, 'E'},  {64, 'F'},  {43, 'G'},  {52, 'H'},  {3, 'I'},  {93, 'J'},
+        {16, 'K'},  {85, 'L'},  {30, 'M'},  {71, 'N'},  {9, 'O'},  {92, 'P'},
+        {29, 'Q'},  {51, 'R'},  {45, 'S'},  {81, 'T'},  {42, 'U'},  {69, 'V'},
+        {8, 'W'},  {77, 'X'},  {11, 'Y'},  {88, 'Z'},  {4, '0'},  {76, '1'},
+        {31, '2'},  {55, '3'},  {34, '4'},  {68, '5'},  {2, '6'},  {73, '7'},
+        {39, '8'},  {86, '9'},  {22, '!'},  {84, '@'},  {28, '#'},  {74, '$'},
+        {5, '%'},  {94, '^'},  {18, '&'},  {82, '*'},  {17, '('},  {60, ')'},
+        {7, '-'},  {89, '='},  {24, '+'},  {61, '_'},  {14, '{'},  {75, '}'},
+        {47, '['},  {83, ']'},  {32, ';'},  {65, ':'},  {27, '"'},  {62, '/'},
+        {19, '?'},  {90, '<'},  {36, '>'},  {79, '.'},  {12, ','},  {56, '`'},
+        {41, '~'},  {15, '|'},  {72, ' '} };
+    for (int i : enc_message) {
+        i = modexpop(i, d, n);
+        dec_message += dmap[i];
     }
-return dec_message;
+    return dec_message;
+}
+
+pairs psedo_rsa_keys(){
+    pairs v;
+    for (;;){
+        std::string text = "qwertyuiop[]asdfghjkl;zxcvbnm,./1234567890!@#$%^&*()-_=+~`{}:?><QWERTYUIOPASDFGHJKLZXCVBNM";
+        v = keys();
+        auto enc_message = encryption(text, v.open_key.first, v.open_key.second);  
+        auto dec_message = decryption(enc_message,v.private_key.first,v.private_key.second);
+        if (text == dec_message) break;  
+    }
+    return v;  
 }
