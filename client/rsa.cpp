@@ -5,9 +5,13 @@
 #include <random>
 #include <string>
 #include <vector>
-/**Проверка на простые числа. Смысл заключается в том,
-что мы делим наше число на несколько первых простых чисел, до 1000.
-Если поделилось, то наше число точно не простое*/
+/**
+* Проверка на простые числа. Смысл заключается в том,
+* что мы делим наше число на несколько первых простых чисел, до 1000.
+* Если поделилось, то наше число точно не простое
+* \param number число, которое проверяется 
+* \param LowPrimes список из простых чисел от 3 до 997
+*/
 bool isPrime(int number) {
     if (number < 2)
         return false; // отбросим числа 0, 1 и отрицательные числа, они не
@@ -221,4 +225,35 @@ pairs psedo_rsa_keys() {
             break;
     }
     return v;
+}
+
+std::string parse(std::vector<int> code_message) {
+    std::string code_str;
+    for (auto i : code_message) {
+        if (i < 10) {
+            code_str += "000" + std::to_string(i);
+        } else if (i >= 10 and i < 100) {
+            code_str += "00" + std::to_string(i);
+        } else if (i >= 100 and i < 1000) {
+            code_str += "0" + std::to_string(i);
+        } else {
+            code_str += std::to_string(i);
+        }
+    }
+    return code_str;
+}
+
+std::vector<int> deparse(std::string code_str) { 
+    std::vector<int> code_vec;
+    std::string number;
+    for (auto i = 0; i < code_str.size(); i++) {
+        if ((i + 1) % 4 != 0) {
+            number += code_str[i];
+        } else {
+            number += code_str[i];
+            code_vec.push_back(std::stoi(number));
+            number = "";
+        }
+    }
+    return code_vec;
 }
