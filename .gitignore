@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+.D:\Education\1st course works\Programming\alfaxa4\Group-chat\out\build
+.CMakeSettings.json
+
 # User-specific files
 *.rsuser
 *.suo

@@ -12,27 +12,27 @@
 #include <vector>
 #include <random>
 
-int not_random();
 /**Шифрование сообщения по алгоритму RSA*/
 std::vector<int> encryption(std::string, int, int);
-std::string decryption(std::vector<int>, int,
-                       int);
+std::string decryption(std::vector<int>, int, int);
+
 struct pairs {
     std::pair<int, int>
         open_key;
     std::pair<int, int>
         private_key;
 };
+
 pairs keys();
-int
-    fast_exponentiation(int,
-                        int);
+int fast_exponentiation(int, int);
 int Generating_a_prime_number();
 int Generating_e(int);
-int Generating_d(int,
-                                            int);
-int modexpop(int , int , int);           
+int Generating_d(int, int);
+int modexpop(int, int, int);           
+
 pairs psedo_rsa_keys();                                                                      
+
+
 class session : public std::enable_shared_from_this<session> {
   public:
     explicit session(boost::asio::io_context &io_context,
