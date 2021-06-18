@@ -1,4 +1,10 @@
 #include "client.hpp"
+#include <boost/asio.hpp>
+#include <boost/asio/buffer.hpp>
+#include <boost/asio/io_context.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/spawn.hpp>
+#include <boost/asio/steady_timer.hpp>
 #include <charconv>
 #include <iostream>
 #include <sstream>
@@ -24,6 +30,27 @@ void session::write() {
     auto self(shared_from_this());
     boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
         try {
+            pairs own_keys = psedo_rsa_keys();
+            open_key = own_keys.open_key;
+            std::pair<int, int> own_k_private = own_keys.private_key;
+
+            if (users.size() == 1) {
+                pairs chat_keys = psedo_rsa_keys();
+                std::pair<int, int> own_k_open = chat_keys.open_key;
+                std::pair<int, int> own_k_private = chat_keys.private_key;
+                int chat_e, chat_n, chat_d;
+                chat_e = own_k_open.first;
+                chat_d = own_k_private.first; 
+                chat_n = own_k_open.second;
+            } else {
+                std::vector<int> data;
+                data = encryption("Hi I`m new user. Please give me keys",
+                                  users[0]->open_key.first,
+                                  users[0]->open_key.second)
+                    std::string request = parse(data); 
+                boost::asio::async_write(
+                    users[0] -> socket, boost::asio::buffer(data + "\n"), yield);
+            }
 
             std::string ID;
             for (;;) {

@@ -2,12 +2,12 @@
 #include <array>
 #include <cmath>
 #include <map>
-#include <random>
 #include <string>
-#include <vector>
+
 /**Проверка на простые числа. Смысл заключается в том,
 что мы делим наше число на несколько первых простых чисел, до 1000.
-Если поделилось, то наше число точно не простое*/
+Если поделилось, то наше число точно не простое */
+
 bool isPrime(int number) {
     if (number < 2)
         return false; // отбросим числа 0, 1 и отрицательные числа, они не
@@ -39,9 +39,9 @@ bool isPrime(int number) {
 Проверка на то, что число простое, есть в функции isPrime*/
 int Generating_a_prime_number() {
     while (true) {
-        std::random_device r;
-        std::default_random_engine e1(r());
-        std::uniform_int_distribution<int> uniform_dist(30, 500);
+        std::random_device r; //
+        std::default_random_engine e1(r()); //
+        std::uniform_int_distribution<int> uniform_dist(30, 500); //
         int num = uniform_dist(e1);
         if (num % 2 == 0)
             num++;
@@ -132,9 +132,7 @@ int modexpop(int x, int y, int N) {
         return (z * z) % N;
     return (x * z * z) % N;
 };
-/**Превращает исходную строку в массив (vector) так,
-что каждая его ячейка заполняется значением ключа соответсвующего символа по
-словарю*/
+/**Кодировка массива чисел*/
 std::vector<int> code(std::string message) {
     std::map<char, int> map = {
         {'a', 40}, {'b', 37}, {'c', 48}, {'d', 38}, {'e', 26}, {'f', 10},
@@ -160,9 +158,7 @@ std::vector<int> code(std::string message) {
     }
     return code_message;
 }
-/**Превращает исходный массив в строку так,
-что она заполняется постепенно (по каждой ячейке массива) заполняется
-значением ключа соответсвующего символа по словарю*/
+/**Декодировка массива чисел*/
 std::string decode(std::vector<int> code_message) {
     std::map<int, char> dmap = {
         {40, 'a'}, {37, 'b'}, {48, 'c'}, {38, 'd'}, {26, 'e'}, {10, 'f'},

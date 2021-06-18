@@ -344,3 +344,5 @@ ASALocalRun/
 healthchecksdb
 /out/build/x64-Debug/.cmake/api/v1/reply
 /out/build/x64-Debug
+/out/build/x64-Debug (по умолчанию)
+/CMakeSettings.json
