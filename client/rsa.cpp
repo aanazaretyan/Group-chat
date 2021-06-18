@@ -12,6 +12,7 @@
 #include <random>
 #include <stdint.h>
 #include <string>
+#include <vcruntime.h>
 #include <vector>
 /**Проверка на простые числа. Смысл заключается в том,
 что мы делим наше число на несколько первых простых чисел, до 1000.
@@ -50,7 +51,7 @@ int Generating_a_prime_number() {
     while (true) {
         std::random_device r;
         std::default_random_engine e1(r());
-        std::uniform_int_distribution<int> uniform_dist(2, 80);
+        std::uniform_int_distribution<int> uniform_dist(30, 500);
         int num = uniform_dist(e1);
         if (num % 2 == 0)
             num++;
@@ -78,7 +79,7 @@ int Generating_e(int f) {
     while (true) {
         std::random_device r;
         std::default_random_engine e1(r());
-        std::uniform_int_distribution<int> uniform_dist(2, 80);
+        std::uniform_int_distribution<int> uniform_dist(20, 300);
         int e = uniform_dist(e1);
         if (Mutual_prime_numbers_test(f, e) == true and e<f )
             return e;
@@ -156,10 +157,7 @@ int modexpop(int x, int y, int N) {
         return (z * z) % N;
     return (x * z * z) % N;
 };
-
-/**Шифрование сообщения по алгоритму RSA*/
-std::vector<int> encryption(std::string message, int e, int n) {
-    std::vector<int> emessage;
+std::vector<int> code(std::string message){
     std::map<char, int> map = {
          {'a', 40},   {'b', 37},   {'c', 48},   {'d', 38},   {'e', 26},   {'f', 10},
          {'g', 23},   {'h', 54},   {'i', 13},   {'j', 91},  {'k', 21},  {'l', 57},
@@ -177,17 +175,13 @@ std::vector<int> encryption(std::string message, int e, int n) {
          {'[', 47},  {']', 83},  {';', 32},  {':', 65},  {'"', 27},  {'/', 62},
          {'?', 19},  {'<', 90},  {'>', 36},  {'.', 79},  {',', 12},  {'`', 56},
          {'~', 41},  {'|', 15},  {' ', 72}, };
+    std::vector<int> code_message;    
     for (char i : message) {
-        int g = map[i]; 
-        g = modexpop(g, e, n);
-        emessage.push_back(g);
-    }
-    return emessage;
+        code_message.push_back(map[i]);
+    }     
+    return code_message;
 }
-
-/**Расшифрование сообщения по алгоритму RSA*/
-std::string decryption(std::vector<int> enc_message, int d, int n) {
-    std::string dec_message;
+std::string decode(std::vector<int> code_message){
     std::map<int, char> dmap = {
         {40, 'a'},   {37, 'b'},   {48, 'c'},   {38, 'd'},   {26, 'e'},   {10, 'f'},
         {23, 'g'},   {54, 'h'},   {13, 'i'},   {91, 'j'},  {21, 'k'},  {57, 'l'},
@@ -205,11 +199,28 @@ std::string decryption(std::vector<int> enc_message, int d, int n) {
         {47, '['},  {83, ']'},  {32, ';'},  {65, ':'},  {27, '"'},  {62, '/'},
         {19, '?'},  {90, '<'},  {36, '>'},  {79, '.'},  {12, ','},  {56, '`'},
         {41, '~'},  {15, '|'},  {72, ' '} };
-    for (int i : enc_message) {
-        i = modexpop(i, d, n);
-        dec_message += dmap[i];
+    std::string decode_message;
+    for (auto i:code_message ) {
+        decode_message+=dmap[i];
     }
-    return dec_message;
+    return decode_message;
+}
+/**Шифрование сообщения по алгоритму RSA*/
+std::vector<int> encryption(std::string message, int e, int n) {
+    std::vector<int> enc_message = code(message);
+    for (std::size_t i=0; i < enc_message.size();i++) {
+        enc_message[i] = modexpop(enc_message[i], e, n);
+    }
+    return enc_message;
+}
+/**Расшифрование сообщения по алгоритму RSA*/
+std::string decryption(std::vector<int> enc_message, int d, int n) {
+    std::vector<int> decryption_message;
+    for (std::size_t i=0; i < enc_message.size();i++) {
+        decryption_message.push_back(modexpop(enc_message[i], d, n)) ;
+    }
+    std::string decode_message = decode(decryption_message);
+    return decode_message;
 }
 
 pairs psedo_rsa_keys(){
@@ -223,3 +234,4 @@ pairs psedo_rsa_keys(){
     }
     return v;  
 }
+
