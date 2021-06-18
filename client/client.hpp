@@ -44,7 +44,15 @@ std::string decode(std::vector<int>);
 
 /**Шифрование сообщения по алгоритму RSA*/
 std::vector<int> encryption(std::string, int, int);
+
+/**Расшифрование сообщения по алгоритму RSA*/
 std::string decryption(std::vector<int>, int, int);
+
+/**Функция перебирает массив и составляет строку*/
+std::string parse(std::vector<int>);
+
+/**Функция перебирает строку и составляет массив*/
+std::vector<int> deparse(std::string);
 
 /**Объекты этого класса - отдельные участники сетевого взаимодействия */
 class session : public std::enable_shared_from_this<session> {

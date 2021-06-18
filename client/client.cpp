@@ -11,51 +11,33 @@
 
 using boost::asio::ip::tcp;
 
-//заимствование с семинара
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 template <typename Class, typename Function>
 auto delegate(std::shared_ptr<Class> ptr, Function fun) {
-    return [ ptr, fun ]<typename... Args>(Args && ... arg) {
+    return [ ptr, fun ]<typename... Args>(Args && ...arg) {
         return (ptr.get()->*fun)(std::forward<Args>(arg)...);
     };
 }
 
 session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
     : socket(std::move(t_socket)), strand(io_context.get_executor()) {}
-//конец заимствования
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-/** Функция внутри класса session, которая постоянно проверяет 
-        входящие сообщения и выводит на экран при получении*/
+/** пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ session, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
 
 void session::write() {
     auto self(shared_from_this());
     boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
         try {
-            pairs own_keys = psedo_rsa_keys();
-            open_key = own_keys.open_key;
-            std::pair<int, int> own_k_private = own_keys.private_key;
-
-            if (users.size() == 1) {
-                pairs chat_keys = psedo_rsa_keys();
-                std::pair<int, int> own_k_open = chat_keys.open_key;
-                std::pair<int, int> own_k_private = chat_keys.private_key;
-                int chat_e, chat_n, chat_d;
-                chat_e = own_k_open.first;
-                chat_d = own_k_private.first; 
-                chat_n = own_k_open.second;
-            } else {
-                std::vector<int> data;
-                data = encryption("Hi I`m new user. Please give me keys",
-                                  users[0]->open_key.first,
-                                  users[0]->open_key.second)
-                    std::string request = parse(data); 
-                boost::asio::async_write(
-                    users[0] -> socket, boost::asio::buffer(data + "\n"), yield);
-            }
-
             std::string ID;
             for (;;) {
                 std::cout << "Enter your name: ";
-                std::getline(std::cin, ID); //запрет на имя меньше 3 символов, при вводе имени 0, 1, 2 символа клиент будет запрашивать имя повторно, пока не получит разрешённое
+                std::getline(
+                    std::cin,
+                    ID); //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 3 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 0,
+                         //1, 2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+                         //пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 if (ID.size() < 3) {
                     std::cout << "Incorrect name. You should use longer name\n";
                 } else {
@@ -63,10 +45,13 @@ void session::write() {
                     break;
                 }
             }
-            boost::asio::async_write(
-                socket, boost::asio::buffer("c" + ID + "\n"), yield); //c - нужно, чтобы сервер мог понять, client это или reader.
+            boost::asio::async_write(socket,
+                                     boost::asio::buffer("c" + ID + "\n"),
+                                     yield); // c - пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+                                             // пїЅпїЅпїЅпїЅпїЅпїЅ, client пїЅпїЅпїЅ пїЅпїЅпїЅ reader.
 
-            for (;;) { //в этом цикле async_write и async_read находятся в специальном порядке, в каком этого требует сервер.
+            for (;;) { //пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ async_write пїЅ async_read пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
+                       //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
                 std::string data;
                 boost::asio::async_read_until(
                     socket, boost::asio::dynamic_buffer(data), "\n", yield);
@@ -77,13 +62,20 @@ void session::write() {
                 data = "";
                 boost::asio::async_read_until(
                     socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                if (data == "Connected to Reader\n") { //при удачном соединении с reader`ом, сервер присылает данную строку. Если прислал другую - значит произошла ошибка. И будет запущено присоединение к reader`у повторно.
+                if (data ==
+                    "Connected to Reader\n") { //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
+                                               //reader`пїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                               //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                               //пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                               //пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                               //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ reader`пїЅ
+                                               //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
                     std::cout << data;
                     break;
                 }
             }
 
-            for (;;) { // основной цикл отправки сообщений
+            for (;;) { // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 std::string body;
                 std::getline(std::cin, body);
                 boost::asio::async_write(
@@ -98,8 +90,7 @@ void session::write() {
 
 std::vector<std::shared_ptr<session>> session::users;
 
-
-/** В функции происходит соединение к серверу*/
+/** пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
 int main() {
     try {
         boost::asio::io_context io_context;
@@ -107,16 +98,17 @@ int main() {
         tcp::socket socket(io_context);
         std::string addr = "127.0.0.1";
         unsigned short port = 1234;
-        //std::string addr;
-        //unsigned short port;
-        //std::cout << "Enter IP-address and port:" << std::endl;
-        //std::cin >> addr >> port;
+        // std::string addr;
+        // unsigned short port;
+        // std::cout << "Enter IP-address and port:" << std::endl;
+        // std::cin >> addr >> port;
         boost::asio::ip::tcp::endpoint serv_addr(
             boost::asio::ip::make_address(addr, ec), port);
         socket.connect(serv_addr, ec);
 
         if (!ec) {
-            socket.wait(socket.wait_read); //ожидание и чтение обязательного сообщения с сервера.
+            socket.wait(socket.wait_read); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                           //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
             size_t bytes = socket.available();
             if (bytes > 0) {
                 std::vector<char> data(bytes);

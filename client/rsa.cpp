@@ -5,12 +5,12 @@
 #include <string>
 #include <vector>
 /**
-* Проверка на простые числа. Смысл заключается в том,
-* что мы делим наше число на несколько первых простых чисел, до 1000.
-* Если поделилось, то наше число точно не простое
-* \param number число, которое проверяется 
-* \param LowPrimes список из простых чисел от 3 до 997
-*/
+ * Проверка на простые числа. Смысл заключается в том,
+ * что мы делим наше число на несколько первых простых чисел, до 1000.
+ * Если поделилось, то наше число точно не простое
+ * \param number число, которое проверяется
+ * \param LowPrimes список из простых чисел от 3 до 997
+ */
 bool isPrime(int number) {
     if (number < 2)
         return false; // отбросим числа 0, 1 и отрицательные числа, они не
@@ -38,13 +38,20 @@ bool isPrime(int number) {
             return false;
     return true;
 }
-/**Генерируется простое число.
-Проверка на то, что число простое, есть в функции isPrime*/
+/**
+ * Генерируется простое число.
+ * Проверка на то, что число простое, есть в функции isPrime
+ * \param r  класс для генерации случайных чисел
+ * \param e1 это класс движка случайных чисел, который генерирует
+ * псевдослучайные числа \param uniform_dist формирует равномерное (каждое
+ * значение одинаково вероятно) распределение целых чисел в выходном
+ * инклюзивно-эксклюзивном диапазоне. \param num случайное число
+ */
 int Generating_a_prime_number() {
     while (true) {
-        std::random_device r; //
-        std::default_random_engine e1(r()); //
-        std::uniform_int_distribution<int> uniform_dist(30, 500); //
+        std::random_device r;
+        std::default_random_engine e1(r());
+        std::uniform_int_distribution<int> uniform_dist(30, 500);
         int num = uniform_dist(e1);
         if (num % 2 == 0)
             num++;
@@ -52,8 +59,12 @@ int Generating_a_prime_number() {
             return num;
     }
 }
-/**Проверяет, взаимно ли простые два f(n) и открытый ключ е
-(или  два числа) на основе алгоритма Евклида*/
+/**
+ * Проверяет, взаимно ли простые два f(n) и открытый ключ е
+ * (или  два числа) на основе алгоритма Евклида
+ * \param f первый параметр для проверки - формула Эйлера f(n) = (p-1) * (q-1)
+ * \param e второй параметр для проверки - открытый ключ
+ */
 bool Mutual_prime_numbers_test(int f, int e) {
     while (f != 0 and e != 0) {
         if (f > e)
@@ -66,8 +77,16 @@ bool Mutual_prime_numbers_test(int f, int e) {
     else
         return false;
 }
-/**Генерируется число e (открытый ключ), проверяя, взаимно ли простое оно
-на основе функции Mutual_prime_numbers_test*/
+/**
+ *  Генерируется число e (открытый ключ), проверяя, взаимно ли простое оно
+ * на основе функции Mutual_prime_numbers_test
+ * \param f первый параметр для генерации - формула Эйлера f(n) = (p-1) * (q-1)
+ * \param r  класс для генерации случайных чисел
+ * \param e1 это класс движка случайных чисел, который генерирует
+ * псевдослучайные числа \param uniform_dist формирует равномерное (каждое
+ * значение одинаково вероятно) распределение целых чисел в выходном
+ * инклюзивно-эксклюзивном диапазоне. \param e открытый ключ
+ */
 int Generating_e(int f) {
     while (true) {
         std::random_device r;
@@ -78,8 +97,13 @@ int Generating_e(int f) {
             return e;
     }
 }
-/**Расширенный алгоритм Евклида.
-Функция взята из https://e-maxx.ru/algo/extended_euclid_algorithm*/
+/**
+ * Расширенный алгоритм Евклида -  находит помимо НОД также коэффициенты x и y
+ * такие, что: a * x + b * y = gcd(a, b). Функция взята из
+ * https://e-maxx.ru/algo/extended_euclid_algorithm \param a параметр - открытый
+ * ключ \param b параметр - формула Эйлера f(n) = (p-1) * (q-1) \param x
+ * параметр - закрытый ключ \param y произвольный параметр
+ */
 auto gcd(int a, int b, int &x, int &y) {
     int x1;
     int y1;
@@ -93,7 +117,14 @@ auto gcd(int a, int b, int &x, int &y) {
     y = x1;
     return d;
 }
-/**Генерирует число d (закрытый ключ), так что e*d mod f == 1*/
+/**
+ * Генерирует число d (закрытый ключ) так,
+ * что e*d mod f == 1
+ * \param e открытый ключ
+ * \param f формула Эйлера f(n) = (p-1) * (q-1)
+ * \param x закрытый ключ
+ * \param y произвольный параметр
+ */
 int Generating_d(int f, int e) {
     while (true) {
         int x;
@@ -105,7 +136,18 @@ int Generating_d(int f, int e) {
         }
     }
 }
-/**Генерируются открытый и закрытый ключи*/
+/**
+ * Генерируются открытый и закрытый ключи
+ * \param p первое случайное простое число
+ * \param q второе случайное простое число
+ * \param n произведение p и q
+ * \param f формула Эйлера f(n) = (p-1) * (q-1)
+ * \param e открытый ключ
+ * \param d закрытый ключ
+ * \param opkey пара из открытого ключа и n
+ * \param prkey пара из закрытого ключа и n
+ * \param keys пара из отрытого и закрытого ключей
+ */
 pairs keys() {
     int p;
     int q;
@@ -125,8 +167,13 @@ pairs keys() {
     pairs keys = {opkey, prkey};
     return keys;
 }
-/**Быстрое возведение числа в степень.
-Функция взята из https://prog-cpp.ru/pow-mod/ */
+/**
+ * Быстрое возведение числа в степень.
+ * Функция взята из https://prog-cpp.ru/pow-mod/
+ * \param x число, которое возводится в степень
+ * \param y степеньоткрытый ключ
+ * \param N число, mod от которого возводится число в степень
+ */
 int modexpop(int x, int y, int N) {
     if (y == 0)
         return 1;
@@ -135,7 +182,12 @@ int modexpop(int x, int y, int N) {
         return (z * z) % N;
     return (x * z * z) % N;
 };
-/**Кодировка массива чисел*/
+/**
+ * Кодировка массива чисел
+ * \param message исходное сообщение в виде строки
+ * \param map словарь
+ * \param code_message кодированный массив
+ */
 std::vector<int> code(std::string message) {
     std::map<char, int> map = {
         {'a', 40}, {'b', 37}, {'c', 48}, {'d', 38}, {'e', 26}, {'f', 10},
@@ -161,7 +213,12 @@ std::vector<int> code(std::string message) {
     }
     return code_message;
 }
-/**Декодировка массива чисел*/
+/**
+ *Декодировка массива чисел
+ * \param code_message исходный массив
+ * \param dmap словарь
+ * \param decode_message декодированная строка
+ */
 std::string decode(std::vector<int> code_message) {
     std::map<int, char> dmap = {
         {40, 'a'}, {37, 'b'}, {48, 'c'}, {38, 'd'}, {26, 'e'}, {10, 'f'},
@@ -186,7 +243,13 @@ std::string decode(std::vector<int> code_message) {
     }
     return decode_message;
 }
-/**Шифрование сообщения по алгоритму RSA*/
+/**
+ *Шифрование сообщения по алгоритму
+ * \param message исходное сообщение
+ * \param e открытый ключ
+ * \param n p*q
+ * \param enc_message кодированный и зашифрованный массив
+ */
 std::vector<int> encryption(std::string message, int e, int n) {
     std::vector<int> enc_message = code(message);
     for (std::size_t i = 0; i < enc_message.size(); i++) {
@@ -194,7 +257,14 @@ std::vector<int> encryption(std::string message, int e, int n) {
     }
     return enc_message;
 }
-/**Расшифрование сообщения по алгоритму RSA*/
+/**
+ * Расшифрование сообщения по алгоритму RSA
+ * \param enc_message кодированный и зашифрованный массив
+ * \param d закрытый ключ
+ * \param n p*q
+ * \param decrtyption_message расшифрованный массив
+ * \param decode_message расшифрованная строка (сообщение)
+ */
 std::string decryption(std::vector<int> enc_message, int d, int n) {
     std::vector<int> decryption_message;
     for (std::size_t i = 0; i < enc_message.size(); i++) {
@@ -203,8 +273,14 @@ std::string decryption(std::vector<int> enc_message, int d, int n) {
     std::string decode_message = decode(decryption_message);
     return decode_message;
 }
-/**Происходит генерация ключей такая, что сообщение впоследствии гарантированно
- и успешно зашифруется и расшифруется*/
+/**
+ *Происходит генерация ключей такая, что сообщение впоследствии гарантированно
+ *и успешно зашифруется и расшифруется
+ * \param v пара открытого и закрытого ключей
+ * \param text строка (сообщение)
+ * \param enc_message массив - зашифрованное сообщение
+ * \param dec_message строка - расшифрованное сообщение
+ */
 pairs psedo_rsa_keys() {
     pairs v;
     for (;;) {
@@ -221,7 +297,12 @@ pairs psedo_rsa_keys() {
     }
     return v;
 }
-
+/**
+ * Функция перебирает массив и составляет строку ,
+ * сопоставляя каждому значению массива 4-значную строку
+ * \param code_message исходный массив
+ * \param code_str  закодированная строка
+ */
 std::string parse(std::vector<int> code_message) {
     std::string code_str;
     for (auto i : code_message) {
@@ -237,8 +318,13 @@ std::string parse(std::vector<int> code_message) {
     }
     return code_str;
 }
-
-std::vector<int> deparse(std::string code_str) { 
+/**
+ * Функция перебирает строку и составляет массив
+ * \param code_str исходная строка
+ * \param code_vec декодированный массив
+ * \param number вспомогательная строка
+ */
+std::vector<int> deparse(std::string code_str) {
     std::vector<int> code_vec;
     std::string number;
     for (auto i = 0; i < code_str.size(); i++) {

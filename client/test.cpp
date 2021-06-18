@@ -55,7 +55,26 @@ TEST_CASE("Modexpop test") {
     auto a = modexpop(5, 6, 8);
     REQUIRE(a == 1);
 }
-
+TEST_CASE("test 1") {
+    // std::string text = "Hellqwerwr";
+    std::string text =
+        "Hello, world!";
+    auto v = psedo_rsa_keys();
+    auto enc_message = encryption(text, v.open_key.first, v.open_key.second);
+    auto dec_message =
+        decryption(enc_message, v.private_key.first, v.private_key.second);
+    REQUIRE(text == dec_message);
+}
+TEST_CASE("code decode"){
+    std::string v = "Albert";
+    std::string d = decode(code(v));
+    REQUIRE(v==d);
+}
+TEST_CASE("Parse deparse"){
+    std::vector<int> v = {212,1251,23,1};
+    std::vector<int> d = deparse(parse(v));
+    REQUIRE(v==d);
+}
 TEST_CASE("Final test") {
     // std::string text = "Hellqwerwr";
     std::string text =
@@ -67,3 +86,4 @@ TEST_CASE("Final test") {
         decryption(enc_message, v.private_key.first, v.private_key.second);
     REQUIRE(text == dec_message);
 }
+
