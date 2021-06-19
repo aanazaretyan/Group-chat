@@ -13,8 +13,8 @@
  */
 bool isPrime(int number) {
     if (number < 2)
-        return false; /// отбросим числа 0, 1 и отрицательные числа, они не
-                      /// являются простыми
+        return false; // отбросим числа 0, 1 и отрицательные числа, они не
+                      // являются простыми
     auto LowPrimes = {
         3,   5,   7,   11,  13,  17,  19,  23,  29,  31,  37,  41,  43,  47,
         53,  59,  61,  67,  71,  73,  79,  83,  89,  97,  101, 103, 107, 109,
@@ -28,11 +28,11 @@ bool isPrime(int number) {
         719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811,
         821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907,
         911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997};
-    ///проверяем, есть ли наше число в LowPrimes
+    //проверяем, есть ли наше число в LowPrimes
     for (int i : LowPrimes)
         if (number == i)
             return true;
-    ///проверяем делимость нашего числа на небольшие простые числа
+    //проверяем делимость нашего числа на небольшие простые числа
     for (int i : LowPrimes)
         if (number % i == 0)
             return false;
@@ -45,7 +45,7 @@ bool isPrime(int number) {
  */
 int Generating_a_prime_number() {
     while (true) {
-        ///подбирается рандомное число в диапозоне
+        //подбирается рандомное число в диапозоне
         std::random_device r;
         std::default_random_engine e1(r());
         std::uniform_int_distribution<int> uniform_dist(30, 500);
@@ -83,7 +83,7 @@ bool Mutual_prime_numbers_test(int f, int e) {
  */
 int Generating_e(int f) {
     while (true) {
-        ///подбирается рандомное число в диапозоне 
+        //подбирается рандомное число в диапозоне 
         std::random_device r;
         std::default_random_engine e1(r());
         std::uniform_int_distribution<int> uniform_dist(20, 300);
