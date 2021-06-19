@@ -5,65 +5,45 @@
 
 using boost::asio::ip::tcp;
 
-//заимствование с семинара
-template <typename Class, typename Function>
-auto delegate(std::shared_ptr<Class> ptr, Function fun) {
-    return [ ptr, fun ]<typename... Args>(Args && ... arg) {
-        return (ptr.get()->*fun)(std::forward<Args>(arg)...);
-    };
-}
-
-session::session(boost::asio::io_context &io_context, tcp::socket t_socket)
-    : socket(std::move(t_socket)), strand(io_context.get_executor()) {}
-//конец заимствовани€
-
-/** ‘ункци€ внутри класса session, котора€ посто€нно провер€ет
-        сообщени€ с клавиатуры и отправл€ет их в сеть*/
-void session::read() {
-    auto self(shared_from_this()); //заимствование с семинара
-    boost::asio::spawn(strand, [this, self](boost::asio::yield_context yield) {
-        try {
-            std::string ID; // ID reader`а
-            std::cout << "Enter your name: ";
-            std::getline(std::cin, ID);
-            boost::asio::async_write(
-                socket, boost::asio::buffer("r" + ID + "\n"), yield);
-            for (;;) {
-                std::string data; //строка, в которой хранитс€ полученное с сети значение
-                boost::asio::async_read_until(
-                    socket, boost::asio::dynamic_buffer(data), "\n", yield);
-                std::cout << data;
-            }
-        } catch (std::exception &e) {
-            socket.close();
-            std::cerr << "Exception: " << e.what() << "\n";
-        }
-    });
-}
-
-std::vector<std::shared_ptr<session>> session::users; //массив указателей на сессии
-
-
-/** ‘ункци€ подключает reader к серверу*/
 int main() {
     try {
+        /// Provides core I/O functionality
         boost::asio::io_context io_context;
+
+        /// Describes an object used to hold error code values
         boost::system::error_code ec;
+
+        /// The TCP socket type
         tcp::socket socket(io_context);
+
+        /// IPv4-address to connect to
         std::string addr = "127.0.0.1";
+
+        /// Port to connect to
         unsigned short port = 1234;
-        // std::string addr;
-        // unsigned short port;
-        // std::cout << "Enter IP-address and port:" << std::endl;
-        // std::cin >> addr >> port;
+
+        // Uncomment this to enter IPv4 and Port by the user
+        /*std::string addr;
+         unsigned short port;
+         std::cout << "Enter IP-address and port:" << std::endl;
+         std::cin >> addr >> port;*/
+
+        /// An argument placeholder, for use with boost::bind(), that
+        /// corresponds to the results argument of a handler for asynchronous
+        /// functions such as boost::asio::async_connect
         boost::asio::ip::tcp::endpoint serv_addr(
             boost::asio::ip::make_address(addr, ec), port);
         socket.connect(serv_addr, ec);
 
         if (!ec) {
             socket.wait(socket.wait_read);
+
+            /// Determine the number of bytes available for reading
             size_t bytes = socket.available();
             if (bytes > 0) {
+
+                /// Keeps the data of the message that was received from the
+                /// server
                 std::vector<char> data(bytes);
                 socket.read_some(boost::asio::buffer(data.data(), data.size()),
                                  ec);
@@ -71,7 +51,7 @@ int main() {
                     std::cout << c;
                 }
             }
-                std::make_shared<session>(io_context, std::move(socket)) ->read();
+            std::make_shared<session>(io_context, std::move(socket))->read();
         } else {
             std::cerr << ec << "\n";
         }

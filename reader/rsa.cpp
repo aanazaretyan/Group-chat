@@ -1,4 +1,4 @@
-#include "rsa.hpp"
+#include "reader.hpp"
 #include <array>
 #include <cmath>
 #include <map>
@@ -9,12 +9,12 @@
  * что мы делим наше число на несколько первых простых чисел, до 1000.
  * Если поделилось, то наше число точно не простое
  * \param number число, которое проверяется
- * \return true или false после проверки числа на простоту
+ * \param LowPrimes список из простых чисел от 3 до 997
  */
 bool isPrime(int number) {
     if (number < 2)
-        return false; /// отбросим числа 0, 1 и отрицательные числа, они не
-                      /// являются простыми
+        return false; // отбросим числа 0, 1 и отрицательные числа, они не
+                      // являются простыми
     auto LowPrimes = {
         3,   5,   7,   11,  13,  17,  19,  23,  29,  31,  37,  41,  43,  47,
         53,  59,  61,  67,  71,  73,  79,  83,  89,  97,  101, 103, 107, 109,
@@ -28,27 +28,23 @@ bool isPrime(int number) {
         719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811,
         821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907,
         911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997};
-    ///проверяем, есть ли наше число в LowPrimes
+    //Проверяем, есть ли наше число в LowPrimes
     for (int i : LowPrimes)
         if (number == i)
             return true;
-    ///проверяем делимость нашего числа на небольшие простые числа
+    //Проверяем делимость нашего числа на небольшие простые числа
     for (int i : LowPrimes)
         if (number % i == 0)
             return false;
     return true;
 }
-/**
- * Генерируется простое число.
- * Проверка на то, что число простое, есть в функции isPrime
- * \return сгенерированное простое число
- */
+/**Генерируется простое число.
+Проверка на то, что число простое, есть в функции isPrime*/
 int Generating_a_prime_number() {
     while (true) {
-        ///подбирается рандомное число в диапозоне
-        std::random_device r;
-        std::default_random_engine e1(r());
-        std::uniform_int_distribution<int> uniform_dist(30, 500);
+        std::random_device r;                                     //
+        std::default_random_engine e1(r());                       //
+        std::uniform_int_distribution<int> uniform_dist(30, 500); //
         int num = uniform_dist(e1);
         if (num % 2 == 0)
             num++;
@@ -56,13 +52,8 @@ int Generating_a_prime_number() {
             return num;
     }
 }
-/**
- * Проверяет, взаимно ли простые два f(n) и открытый ключ е
- * (или  два числа) на основе алгоритма Евклида
- * \param f первый параметр для проверки - формула Эйлера f(n) = (p-1) * (q-1)
- * \param e второй параметр для проверки - открытый ключ
- * \return true или false после проверки на взаимную простоту
- */
+/**Проверяет, взаимно ли простые два f(n) и открытый ключ е
+(или  два числа) на основе алгоритма Евклида*/
 bool Mutual_prime_numbers_test(int f, int e) {
     while (f != 0 and e != 0) {
         if (f > e)
@@ -75,15 +66,10 @@ bool Mutual_prime_numbers_test(int f, int e) {
     else
         return false;
 }
-/**
- *  Генерируется число e (открытый ключ), проверяя, взаимно ли простое оно
- * на основе функции Mutual_prime_numbers_test
- * \param f первый параметр для генерации - формула Эйлера f(n) = (p-1) * (q-1)
- * \return открытый ключ
- */
+/**Генерируется число e (открытый ключ), проверяя, взаимно ли простое оно
+на основе функции Mutual_prime_numbers_test*/
 int Generating_e(int f) {
     while (true) {
-        ///подбирается рандомное число в диапозоне
         std::random_device r;
         std::default_random_engine e1(r());
         std::uniform_int_distribution<int> uniform_dist(20, 300);
@@ -92,16 +78,8 @@ int Generating_e(int f) {
             return e;
     }
 }
-/**
- * Расширенный алгоритм Евклида -  находит помимо НОД также коэффициенты x и y
- * такие, что: a * x + b * y = gcd(a, b). Функция взята из
- * https://e-maxx.ru/algo/extended_euclid_algorithm
- * \param a параметр - открытый ключ
- * \param b параметр - формула Эйлера f(n) = (p-1) * (q-1)
- * \param x параметр - закрытый ключ
- * \param y произвольный параметр
- * \return НОД
- */
+/**Расширенный алгоритм Евклида.
+Функция взята из https://e-maxx.ru/algo/extended_euclid_algorithm*/
 auto gcd(int a, int b, int &x, int &y) {
     int x1;
     int y1;
@@ -115,13 +93,7 @@ auto gcd(int a, int b, int &x, int &y) {
     y = x1;
     return d;
 }
-/**
- * Генерирует число d (закрытый ключ) так,
- * что e*d mod f == 1
- * \param e открытый ключ
- * \param f формула Эйлера f(n) = (p-1) * (q-1)
- * \return закрытый ключ
- */
+/**Генерирует число d (закрытый ключ), так что e*d mod f == 1*/
 int Generating_d(int f, int e) {
     while (true) {
         int x;
@@ -133,16 +105,10 @@ int Generating_d(int f, int e) {
         }
     }
 }
-/**
- * Генерируются открытый и закрытый ключи
- * \return пара открытого и закрытого ключей
- */
+/**Генерируются открытый и закрытый ключи*/
 pairs keys() {
-    ///первое случайное число
     int p;
-    ///второе случайное число
     int q;
-    /// p * q
     int n;
     for (;;) {
         p = Generating_a_prime_number();
@@ -151,25 +117,16 @@ pairs keys() {
         if (p != q and n > 94)
             break;
     }
-    /// функция Эйлера
     int f = (p - 1) * (q - 1);
-    ///открытый ключ
     int e = Generating_e(f);
-    ///закрытый ключ
     int d = Generating_d(f, e);
     std::pair<long long, int> opkey = {e, n};
     std::pair<int, int> prkey = {d, n};
     pairs keys = {opkey, prkey};
     return keys;
 }
-/**
- * Быстрое возведение числа в степень.
- * Функция взята из https://prog-cpp.ru/pow-mod/
- * \param x число, которое возводится в степень
- * \param y степеньоткрытый ключ
- * \param N число, mod от которого возводится число в степень
- * \return возведенное число в степень по модулю N
- */
+/**Быстрое возведение числа в степень.
+Функция взята из https://prog-cpp.ru/pow-mod/ */
 int modexpop(int x, int y, int N) {
     if (y == 0)
         return 1;
@@ -178,13 +135,8 @@ int modexpop(int x, int y, int N) {
         return (z * z) % N;
     return (x * z * z) % N;
 };
-/**
- * Кодировка массива чисел
- * \param message исходное сообщение в виде строки
- * \return кодированный массив
- */
+/**Кодировка массива чисел*/
 std::vector<int> code(std::string message) {
-    ///словарь
     std::map<char, int> map = {
         {'a', 40}, {'b', 37}, {'c', 48}, {'d', 38}, {'e', 26}, {'f', 10},
         {'g', 23}, {'h', 54}, {'i', 13}, {'j', 91}, {'k', 21}, {'l', 57},
@@ -209,13 +161,8 @@ std::vector<int> code(std::string message) {
     }
     return code_message;
 }
-/**
- *Декодировка массива чисел
- * \param code_message исходный массив
- * \return декодированная строка
- */
+/**Декодировка массива чисел*/
 std::string decode(std::vector<int> code_message) {
-    ///словарь
     std::map<int, char> dmap = {
         {40, 'a'}, {37, 'b'}, {48, 'c'}, {38, 'd'}, {26, 'e'}, {10, 'f'},
         {23, 'g'}, {54, 'h'}, {13, 'i'}, {91, 'j'}, {21, 'k'}, {57, 'l'},
@@ -239,13 +186,7 @@ std::string decode(std::vector<int> code_message) {
     }
     return decode_message;
 }
-/**
- *Шифрование сообщения по алгоритму
- * \param message исходное сообщение
- * \param e открытый ключ
- * \param n p*q
- * \return кодированный и зашифрованный массив
- */
+/**Шифрование сообщения по алгоритму RSA*/
 std::vector<int> encryption(std::string message, int e, int n) {
     std::vector<int> enc_message = code(message);
     for (std::size_t i = 0; i < enc_message.size(); i++) {
@@ -253,15 +194,8 @@ std::vector<int> encryption(std::string message, int e, int n) {
     }
     return enc_message;
 }
-/**
- * Расшифрование сообщения по алгоритму RSA
- * \param enc_message кодированный и зашифрованный массив
- * \param d закрытый ключ
- * \param n p*q
- * \return расшифрованная строка (сообщение)
- */
+/**Расшифрование сообщения по алгоритму RSA*/
 std::string decryption(std::vector<int> enc_message, int d, int n) {
-    ///расшифрованный массив
     std::vector<int> decryption_message;
     for (std::size_t i = 0; i < enc_message.size(); i++) {
         decryption_message.push_back(modexpop(enc_message[i], d, n));
@@ -269,21 +203,15 @@ std::string decryption(std::vector<int> enc_message, int d, int n) {
     std::string decode_message = decode(decryption_message);
     return decode_message;
 }
-/**
- *Происходит генерация ключей такая, что сообщение впоследствии гарантированно
- *и успешно зашифруется и расшифруется
- * \return строка - расшифрованное сообщение
- */
+/**Происходит генерация ключей такая, что сообщение впоследствии гарантированно
+ и успешно зашифруется и расшифруется*/
 pairs psedo_rsa_keys() {
-    ///пара открытого и закрытого ключей
     pairs v;
     for (;;) {
-        ///строка (сообщение)
         std::string text =
             "qwertyuiop[]asdfghjkl;zxcvbnm,./"
             "1234567890!@#$%^&*()-_=+~`{}:?><QWERTYUIOPASDFGHJKLZXCVBNM";
         v = keys();
-        ///массив - зашифрованное сообщение
         auto enc_message =
             encryption(text, v.open_key.first, v.open_key.second);
         auto dec_message =
@@ -293,12 +221,7 @@ pairs psedo_rsa_keys() {
     }
     return v;
 }
-/**
- * Функция перебирает массив и составляет строку ,
- * сопоставляя каждому значению массива 4-значную строку
- * \param code_message исходный массив
- * \return закодированная строка
- */
+
 std::string parse(std::vector<int> code_message) {
     std::string code_str;
     for (auto i : code_message) {
@@ -314,13 +237,8 @@ std::string parse(std::vector<int> code_message) {
     }
     return code_str;
 }
-/**
- * Функция перебирает строку и составляет массив
- * \param code_str исходная строка
- * \return декодированный массив
- */
+
 std::vector<int> deparse(std::string code_str) {
-    ///вспомогательная строка
     std::vector<int> code_vec;
     std::string number;
     for (auto i = 0; i < code_str.size(); i++) {
