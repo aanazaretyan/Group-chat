@@ -30,7 +30,7 @@ conan_cmake_run(
 
 # При использовании статической библиотеки нет необходимости копировать dll
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost REQUIRED COMPONENTS system coroutine math_tr1)
+find_package(Boost REQUIRED COMPONENTS system coroutine)
 
 enable_testing()
 add_subdirectory(external/doctest)
